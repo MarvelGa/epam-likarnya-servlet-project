@@ -22,41 +22,41 @@
                             <c:if test="${not empty errorMessage and empty exception and empty code}">
                                 <h4 style="color:tomato">${errorMessage}</h4>
                             </c:if>
-                            <form id="formRegistration" action="/tct/controller?command=patient-registration" method="post">
+                            <form id="formRegistration" action="/likarnya/controller?command=patient-registration" method="post">
 
 
                                 <div class="field">
                                     <label>${resources.Enter_your_name}:</label>
                                     <div class="input"><input type="text" name="name"
-<%--                                                              value='${sessionScope}' id="name"/>--%>
-                                    </div>
+                                                              value='${requestScope.patient.firstName}' id="name"/>
+                                   required </div>
                                 </div>
 
                                 <div class="field">
                                     <label>${resources.Enter_your_lastName}:</label>
                                     <div class="input"><input type="text" name="lastName"
-<%--                                                              value='${sessionScope.user.lastName}'--%>
-                                                              id="lastName"/>
+                                                              value='${requestScope.patient.firstName}'
+                                                              id="lastName" required/>
                                     </div>
                                 </div>
 
                                 <div class="field">
                                     <label>${resources.Enter_your_b_day}:</label>
                                     <div class="input"><input type="date" min="1900-01-01" max="${dateOfToday}" name="dateOfBirth"
-<%--                                                              value="${sessionScope.user.}"--%>
-                                                              id="password"/></div>
+                                                              value="${requestScope.patient.birhtDay}"
+                                                              id="dateOfBirth" required/></div>
                                 </div>
 
 
                                 <div class="field">
                                     <label>${resources.Choose_your_gender}:</label>
                                     <div class="input">
-                                        <select name="gender" required>
+                                        <select name="gender" id="gender" required>
                                             <option selected disabled>${resources.Choose_your_gender}:</option>
-                                            <option value="Male">
+                                            <option value="MALE">
                                                 Male
                                             </option>
-                                            <option value="Female">
+                                            <option value="FEMALE">
                                                 Female
                                             </option>
                                         </select>
@@ -67,8 +67,6 @@
                                     <button type="submit">${resources.Register}</button>
                                 </div>
 
-                                <c:remove var="errorMessage"/>
-                                <c:remove var="user"/>
                             </form>
                         </c:when>
                     </c:choose>

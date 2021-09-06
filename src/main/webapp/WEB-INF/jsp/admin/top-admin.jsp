@@ -6,8 +6,8 @@
             <th><h3><a href="controller?command=nurses">${resources.Nurses}</a> |</h3></th>
             <th><h3><a href="controller?command=patients">${resources.Patients}</a> |</h3></th>
             <th><h3><a href="controller?command=doctors">${resources.Doctors}</a> |</h3></th>
-            <th><h3><a href="controller?command=medical-registration">${resources.Med_registration_page}</a> |</h3></th>
-            <th><h3><a href="controller?command=patient-registration">${resources.Patients_Registration_page}</a> |</h3></th>
+            <th><h3><a href="controller?command=medical-form">${resources.Med_registration_page}</a> |</h3></th>
+            <th><h3><a href="controller?command=patient-form">${resources.Patients_Registration_page}</a> |</h3></th>
             <th><h3>
                 <a href='changeLocale' class='langstyle'>${resources.EN}</a>
                 <strong style='width:2px'>|</strong>

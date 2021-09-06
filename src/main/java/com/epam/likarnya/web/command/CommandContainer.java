@@ -15,8 +15,10 @@ public class CommandContainer {
 //        commands.put("home", new CommandHome());
         commands.put("authorization", new PostLoginCommand());
         commands.put("adminCabinet", new AdminCabinet());
-        commands.put("patient-registration", new PatientRegistration());
-        commands.put("medical-registration", new AdminCabinet());
+        commands.put("patient-form", new PatientFormRegistration());
+        commands.put("medical-form", new MedicalFormRegistration());
+        commands.put("patient-registration", new PostPatientRegistration());
+        commands.put("medical-registration", new PostMedicalRegistration());
 
 //        commands.put("register", new PostRegistrationCommand());
 //        commands.put("registration", new GetRegistrationCommand());
