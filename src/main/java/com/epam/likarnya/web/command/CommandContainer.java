@@ -19,6 +19,8 @@ public class CommandContainer {
         commands.put("medical-form", new MedicalFormRegistration());
         commands.put("patient-registration", new PostPatientRegistration());
         commands.put("medical-registration", new PostMedicalRegistration());
+        commands.put("doctors", new DoctorsList());
+        commands.put("nurses", new NursesList());
 
 //        commands.put("register", new PostRegistrationCommand());
 //        commands.put("registration", new GetRegistrationCommand());

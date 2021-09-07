@@ -16,103 +16,101 @@
         <table>
             <tr>
                 <td>
-                    <c:choose>
-                        <c:when test="${sessionScope.user==null}">
 
-                            <c:if test="${not empty errorMessage and empty exception and empty code}">
-                                <h4 style="color:tomato">${errorMessage}</h4>
-                            </c:if>
-                            <form id="formRegistration" action="/likarnya/controller?command=medical-registration"
-                                  method="post">
-                                <table>
+                    <c:if test="${not empty errorMessage and empty exception and empty code}">
+                        <h4 style="color:tomato">${errorMessage}</h4>
+                    </c:if>
 
-                                    <tr>
-                                        <th>
-                                            <label>First Name</label>
-                                        </th>
-                                        <td>
-                                            <input type="text" name="firstName" field="{firstName}"
-                                                   id="firstName"
-                                                   value="${registrationUser.firstName}"/>
-                                        </td>
-                                    </tr>
+                    <form id="formRegistration" action="/likarnya/controller?command=medical-registration"
+                          method="post">
 
-
-                                    <tr>
-                                        <th>
-                                            <label>Last Name</label>
-                                        </th>
-                                        <td>
-                                            <input type="text" name="lastName" field="{lastName}" id="lastName"
-                                                   value="${registrationUser.lastName}"/>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>
-                                            <label>Email</label>
-                                        </th>
-                                        <td>
-                                            <input type="text" name="email" field="{email}" id="email"
-                                                   value="${registrationUser.email}"/>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>
-                                            <label>Password</label>
-                                        </th>
-                                        <td>
-                                            <input type="password" name="password" field="{password}"
-                                                   id="password"
-                                                   value="${registrationUser.password}"/>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>
-                                            <label for="role">Role</label>
-                                        </th>
-                                        <td>
-                                            <select field="{role}" id="role" required>
-                                                <option value="DOCTOR">DOCTOR</option>
-                                                <option value="NURSE">NURSE</option>
-                                            </select>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>
-                                            <label for="category">Category</label>
-                                        </th>
-                                        <td>
-                                            <select field="{category}" id="category" required>
-                                                <option value=0>NONE</option>
-                                                <option value=1>THERAPIST</option>
-                                                <option value=2>SURGEON</option>
-                                                <option value=3>TRAUMATOLOGIST</option>
-                                                <option value=4>DERMATOLOGIST</option>
-                                                <option value=5>NEUROPATHOLOGIST</option>
-                                                <option value=6>OTOLARYNGOLOGIST</option>
-                                                <option value=7>OPHTHALMOLOGIST</option>
-                                            </select>
-                                        </td>
-                                    </tr>
+                        <table>
+                            <tr>
+                                <th>
+                                    <label>First Name</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="firstName" field="{firstName}"
+                                           id="firstName"
+                                           value="${registrationUser.firstName}" required/>
+                                </td>
+                            </tr>
 
 
-                                    <tr>
-                                        <th>
-                                        </th>
-                                        <td colspan="0">
-                                            <input type="submit" value="Registration"/>
-                                            <input type="reset" value="Clear">
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-                        </c:when>
-                    </c:choose>
+                            <tr>
+                                <th>
+                                    <label>Last Name</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="lastName" field="{lastName}" id="lastName"
+                                           value="${registrationUser.lastName}" required  />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    <label>Email</label>
+                                </th>
+                                <td>
+                                    <input type="text" name="email" field="{email}" id="email"
+                                           value="${registrationUser.email}" required />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    <label>Password</label>
+                                </th>
+                                <td>
+                                    <input type="password" name="password" field="{password}"
+                                           id="password"
+                                           value="${registrationUser.password}" required  />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    <label for="role">Role</label>
+                                </th>
+                                <td>
+                                    <select name="role" id="role" required>
+                                        <option value="DOCTOR">DOCTOR</option>
+                                        <option value="NURSE">NURSE</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th>
+                                    <label for="category">Category</label>
+                                </th>
+                                <td>
+                                    <select name="category" id="category" required>
+                                        <option value=0>NONE</option>
+                                        <option value=1>THERAPIST</option>
+                                        <option value=2>SURGEON</option>
+                                        <option value=3>TRAUMATOLOGIST</option>
+                                        <option value=4>DERMATOLOGIST</option>
+                                        <option value=5>NEUROPATHOLOGIST</option>
+                                        <option value=6>OTOLARYNGOLOGIST</option>
+                                        <option value=7>OPHTHALMOLOGIST</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+
+                            <tr>
+                                <th>
+                                </th>
+                                <td colspan="0">
+                                    <input type="submit" value="Registration"/>
+                                    <input type="reset" value="Clear">
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
                 </td>
+
 
                 <td>
                     </br></br>
@@ -127,6 +125,7 @@
                             </ul>
                         </c:when>
                     </c:choose>
+                </td>
                 </td>
             </tr>
         </table>

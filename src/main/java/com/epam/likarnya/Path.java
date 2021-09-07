@@ -14,6 +14,14 @@ public final class Path {
     //admin
     public static final String PAGE__PATIENT_REGISTRATION = "/WEB-INF/jsp/admin/patient-registration.jsp";
     public static final String PAGE__MEDIC_REGISTRATION = "/WEB-INF/jsp/admin/medworker-registration.jsp";
+    public static final String PAGE__DOCTORS = "/WEB-INF/jsp/admin/list-doctors.jsp";
+    public static final String PAGE__NURSES= "/WEB-INF/jsp/admin/list-nurses.jsp";
+
+
+
+
+    public static final String COMMAND__NURSES_LIST = "controller?command=nurses";
+    public static final String COMMAND__DOCTORS_LIST = "controller?command=doctors";
 
 
     public static final String COMMAND__ADMIN_CABINET = "controller?command=adminCabinet";

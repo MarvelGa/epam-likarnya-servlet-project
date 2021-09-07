@@ -15,7 +15,8 @@ public class UserDAOImpl implements UserDAO {
     private static final Logger logger = LogManager.getLogger(UserDAOImpl.class);
     private static final String GET_USER_BY_EMAIL = "SELECT * FROM users WHERE email=?";
     private static final String CREAT_PATIENT = "INSERT INTO patients(first_name, last_name, birth_day, gender) VALUES (?, ?, ?, ?);";
-    private static final String CREAT_USER = "INSERT INTO patients(email, first_name, last_name, password, role_id) VALUES (?, ?, ?, ?, ?);";
+    private static final String CREAT_DOCTOR = "INSERT INTO users(first_name, last_name, email, password, `role`, category_id) VALUES (?, ?, ?, ?, ?, ?);";
+    private static final String CREAT_NURSE = "INSERT INTO users(first_name, last_name, email, password, `role`) VALUES (?, ?, ?, ?, ?);";
 
     @Override
     public User getUserByEmail(String email) throws DaoException {
@@ -79,42 +80,44 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public long createMedicalWorker(User user) throws DaoException {
-        return 0;
+        int id = -1;
+        final String query;
+        if (user.getCategoryId() != null) {
+            query = CREAT_DOCTOR;
+        } else {
+            query = CREAT_NURSE;
+        }
+        DBManager dbm;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, user.getFirstName());
+            pstmt.setString(2, user.getLastName());
+            pstmt.setString(3, user.getEmail());
+            pstmt.setString(4, user.getPassword());
+            pstmt.setString(5, String.valueOf(user.getRole()));
+            if (user.getCategoryId() != null) {
+                pstmt.setLong(6, user.getCategoryId());
+            }
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+            if (rs != null && rs.next()) {
+                id = rs.getInt(1);
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_INSERT_USER, ex);
+            throw new DaoException(Messages.ERR_CANNOT_INSERT_USER, ex);
+        } finally {
+            DBManager.close(con, pstmt, rs);
+        }
+        return id;
     }
-
-//    @Override
-//    public int createUser(User user) throws DaoException {
-//        int id = -1;
-//        final String query = CREAT_USER;
-//        DBManager dbm;
-//        PreparedStatement pstmt = null;
-//        ResultSet rs = null;
-//        Connection con = null;
-//        try {
-//            dbm = DBManager.getInstance();
-//            con = dbm.getConnection();
-//            pstmt = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-//            pstmt.setString(1, user.getEmail());
-//            pstmt.setString(2, user.getFirstName());
-//            pstmt.setString(3, user.getLastName());
-//            pstmt.setString(4, user.getPassword());
-//            pstmt.setInt(5, 2);
-//
-//            pstmt.executeUpdate();
-//            rs = pstmt.getGeneratedKeys();
-//            if (rs != null && rs.next()) {
-//                id = rs.getInt(1);
-//            }
-//            con.commit();
-//        } catch (SQLException ex) {
-//            DBManager.rollback(con);
-//            logger.error(Messages.ERR_CANNOT_INSERT_USER, ex);
-//            throw new DaoException(Messages.ERR_CANNOT_INSERT_USER, ex);
-//        } finally {
-//            DBManager.close(con, pstmt, rs);
-//        }
-//        return id;
-//    }
 
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();

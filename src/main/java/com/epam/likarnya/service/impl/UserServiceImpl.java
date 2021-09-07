@@ -49,6 +49,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public long addMedicalWorker(User user) throws ServiceException {
-        return 0;
+        long inserted;
+        try {
+            inserted = userDAO.createMedicalWorker(user);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
+        }
+        return inserted;
     }
 }

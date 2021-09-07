@@ -3,7 +3,6 @@ package com.epam.likarnya.web.command;
 import com.epam.likarnya.Path;
 import com.epam.likarnya.exception.AppException;
 import com.epam.likarnya.model.Patient;
-import com.epam.likarnya.model.User;
 import com.epam.likarnya.service.UserService;
 import com.epam.likarnya.service.impl.ServiceFactory;
 import com.epam.likarnya.web.validator.DataValidator;
@@ -35,30 +34,22 @@ public class PostPatientRegistration implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         logger.debug("Command starts");
-        String firstName = request.getParameter("firstName");
+        HttpSession session = request.getSession();
+        String name = request.getParameter("name");
         String lastName = request.getParameter("lastName");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        String role = request.getParameter("role");
-        Long category = Long.valueOf(request.getParameter("category"));
+        String bDay = request.getParameter("dateOfBirth");
+        String gender = request.getParameter("gender");
 
         List<String> errorList = new ArrayList<>();
 
-//        if (name == null || lastName == null || bDay == null || gender==null || name.isEmpty() || lastName.isEmpty()) {
-//            String errorMessage = "Each field must be filled";
-//            request.setAttribute("errorMessage", errorMessage);
-//            logger.error("errorMessage --> " + errorMessage);
-//            return Path.PAGE__MEDIC_REGISTRATION;
-//        }
-
-
-        if (userService.getUserByEmail(email) != null) {
-            logger.trace("User with this email already exist");
-            String errorMessage = "User with this email already exist";
-            errorList.add(errorMessage);
+        if (name == null || lastName == null || bDay == null || gender==null || name.isEmpty() || lastName.isEmpty()) {
+            String errorMessage = "Each field must be filled";
+            request.setAttribute("errorMessage", errorMessage);
+            logger.error("errorMessage --> " + errorMessage);
+            return Path.PAGE__MEDIC_REGISTRATION;
         }
 
-        if (!DataValidator.isNameValid(firstName)) {
+        if (!DataValidator.isNameValid(name)) {
             logger.trace("Invalid name");
             String errorMessage = "You entered invalid name";
             errorList.add(errorMessage);
@@ -69,48 +60,21 @@ public class PostPatientRegistration implements Command {
             errorList.add(errorMessage);
         }
 
-        if (!DataValidator.isEmailValid(email)) {
-            logger.trace("Invalid email");
-            String errorMessage = "You entered invalid email";
-            errorList.add(errorMessage);
-        }
-
-        if (!DataValidator.isPasswordValid(password)) {
-            logger.trace("Invalid password");
-            String errorMessage = "You entered invalid password";
-            errorList.add(errorMessage);
-        }
-
         if (!errorList.isEmpty()) {
             request.setAttribute("errorMessages", errorList);
             logger.debug(String.format("forward --> %s", Path.PAGE__PATIENT_REGISTRATION));
-            return Path.PAGE__MEDIC_REGISTRATION;
+            return Path.PAGE__PATIENT_REGISTRATION;
         } else {
-            User newUser;
-            if (category!=0){
-                newUser =new User();
-                newUser.setFirstName(firstName);
-                newUser.setLastName(lastName);
-                newUser.setEmail(email);
-                newUser.setPassword(password);
-                newUser.setRole(User.Role.valueOf(role));
-                newUser.setCategoryId(category);
-            }else{
-                newUser =new User();
-                newUser.setFirstName(firstName);
-                newUser.setLastName(lastName);
-                newUser.setEmail(email);
-                newUser.setPassword(password);
-                newUser.setRole(User.Role.valueOf(role));
-            }
-
-
-            logger.trace("Saving new user: " + newUser);
-            userService.addMedicalWorker(newUser);
+            Patient newPatient = new Patient();
+            newPatient.setFirstName(name);
+            newPatient.setLastName(lastName);
+            newPatient.setDateOfBirth(LocalDate.parse(bDay));
+            newPatient.setGender(Patient.Gender.valueOf(gender));
+            logger.trace("Saving new patient: " + newPatient);
+            userService.addPatient(newPatient);
             logger.debug(String.format("redirect --> %s", Path.COMMAND__ADMIN_CABINET));
             return Path.COMMAND__ADMIN_CABINET;
         }
 
     }
-
 }
