@@ -20,8 +20,11 @@ public class Messages {
     public static final String ERR_CANNOT_DELETE_USER = "Cannot delete new user";
     public static final String ERR_CANNOT_READ_ALL_USERS = "Cannot read all users";
     public static final String ERR_CANNOT_COUNT_ALL_USERS = "Cannot count all users";
+    public static final String ERR_CANNOT_READ_ALL_PATIENTS = "Cannot read all patients";
+
 
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_USER_BY_EMAIL = "Cannot obtain a user by its email at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_INSERT_USER = "Cannot insert new user at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_READ_ALL_USERS = "Cannot read all users at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENT = "Cannot read all patients at service layer";
 }
