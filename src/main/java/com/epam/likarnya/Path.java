@@ -19,6 +19,9 @@ public final class Path {
     public static final String PAGE__ADDING_MED_CAD= "/WEB-INF/jsp/admin/add-medcard.jsp";
 
 
+   //doctor
+   public static final String PAGE__DOCTOR_CABINET= "/WEB-INF/jsp/doctor/doctorCabinet.jsp";
+   public static final String PAGE__TREATMENT_ASSIGNING= "/WEB-INF/jsp/doctor/treatment-assigning.jsp";
 
 
     public static final String COMMAND__NURSES_LIST = "controller?command=nurses";

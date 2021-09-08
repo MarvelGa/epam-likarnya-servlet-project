@@ -1,5 +1,7 @@
 package com.epam.likarnya.dao.impl;
 
+import com.epam.likarnya.DTO.DoctorDTO;
+import com.epam.likarnya.DTO.PatientDTO;
 import com.epam.likarnya.dao.PatientDAO;
 import com.epam.likarnya.dao.dbmanager.DBManager;
 import com.epam.likarnya.exception.DaoException;
@@ -17,6 +19,7 @@ public class PatientDAOImpl implements PatientDAO {
     private static final Logger logger = Logger.getLogger(PatientDAOImpl.class);
     private static final String GET_NEW_PATIENT_WITHOUT_M_CARD = "SELECT p.id, p.first_name, p.last_name, p.gender, p.birth_day FROM patients p WHERE p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='NEW' OR st.patient_status='DISCHARGED' OR st.patient_status='DIAGNOSED')";
     private static final String GET_PATIENT_BY_ID = "SELECT * FROM patients WHERE id=?";
+    private static final String GET_PATIENTS_BY_DOCTOR_ID = "SELECT p.id AS id, p.first_name AS firstName, p.last_name AS lastName, p.birth_day as dateOfBirth, p.gender AS gender, mc.complaints as complaints FROM patients p, statements st, medical_cards mc WHERE p.id=st.patient_id AND mc.statement_id=st.id AND st.patient_status='NEW' AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u WHERE st.id=mc.statement_id AND mc.doctor_id=u.id AND st.patient_status='NEW' AND u.id=?);";
 
     @Override
     public List<Patient> getPatientWithMedicCard() {
@@ -70,6 +73,42 @@ public class PatientDAOImpl implements PatientDAO {
             DBManager.close(con, pstmt, rs);
         }
         return patient;
+    }
+
+    @Override
+    public List<PatientDTO> getPatientsByDoctorId(Long id) {
+        final String query = GET_PATIENTS_BY_DOCTOR_ID;
+        List<PatientDTO> patients = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                PatientDTO patientDTO = new PatientDTO();
+                patientDTO.setId(rs.getLong("id"));
+                patientDTO.setFirstName(rs.getString("firstName"));
+                patientDTO.setLastName(rs.getString("lastName"));
+                patientDTO.setDateOfBirth(rs.getString("dateOfBirth"));
+                patientDTO.setGender(rs.getString("gender"));
+                patientDTO.setComplaints(rs.getString("complaints"));
+                patients.add(patientDTO);
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return patients;
     }
 
     private Patient extractPatientFromResultSet(ResultSet rs) throws SQLException {

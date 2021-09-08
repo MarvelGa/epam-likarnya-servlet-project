@@ -46,7 +46,7 @@ public class PostPatientRegistration implements Command {
             String errorMessage = "Each field must be filled";
             request.setAttribute("errorMessage", errorMessage);
             logger.error("errorMessage --> " + errorMessage);
-            return Path.PAGE__MEDIC_REGISTRATION;
+            return Path.PAGE__PATIENT_REGISTRATION;
         }
 
         if (!DataValidator.isNameValid(name)) {

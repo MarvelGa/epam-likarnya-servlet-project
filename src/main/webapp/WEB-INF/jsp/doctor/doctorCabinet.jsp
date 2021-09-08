@@ -5,23 +5,23 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>${resources.Admin_personal_cabinet}</title>
+    <title>${resources.Doctor_personal_cabinet}</title>
     <meta charset="UTF-8"/>
-<%--    <link rel="stylesheet" href="static/topstyle.css">--%>
+    <link rel="stylesheet" href="static/topstyle.css">
 </head>
 <body>
 <center>
-    <%@include file="/WEB-INF/jsp/admin/top-admin.jsp" %>
-<%--    <center><h1>${resources.Admin_cabinet}</h1></center>--%>
-    <h2 style="color: cadetblue">${resources.New_patients}</h2>
+    <%@include file="/WEB-INF/jsp/doctor/top-doctor.jsp" %>
+    <%--    <center><h1>${resources.Admin_cabinet}</h1></center>--%>
+    <h2 style="color: cadetblue">${resources.Patient_for_diagnosis}</h2>
 
-    <form action="./controller" method="GET">
-        <input type="hidden" name="command" value="patient-form">
-        <input type="submit" value="${resources.Add_new_patient}">
-    </form>
+    <%--    <form action="./controller" method="GET">--%>
+    <%--        <input type="hidden" name="command" value="patient-form">--%>
+    <%--        <input type="submit" value="${resources.Add_new_patient}">--%>
+    <%--    </form>--%>
 
     <c:choose>
-        <c:when test="${requestScope.patients.size()!=0}">
+        <c:when test="${requestScope.doctorPatients.size()!=0}">
             </br>
             <%
                 int counter = 1;
@@ -33,9 +33,10 @@
                     <th>${resources.Last_name}</th>
                     <th>${resources.B_day}</th>
                     <th>${resources.Gender}</th>
+                    <th>${resources.Complaints}</th>
                     <th colspan="2">${resources.Operation}</th>
                 </tr>
-                <c:forEach var="record" items="${requestScope.patients}">
+                <c:forEach var="record" items="${requestScope.doctorPatients}">
                     <tr>
                         <td>
                             <%=counter++%>
@@ -51,7 +52,6 @@
 
                         <td>
                                 ${record.dateOfBirth}
-<%--                                        <custom:formatDate value="${record.dateOfBirth}" pattern="dd.MM.yyyy"/>--%>
                         </td>
 
                         <td>
@@ -59,9 +59,13 @@
                         </td>
 
                         <td>
+                                ${record.complaints}
+                        </td>
+
+                        <td>
                             <form action="./controller" method="GET">
-                                <input type="hidden" name="command" value="add-medical-card">
-                                <input type="submit" value="${resources.Add_medical_card}">
+                                <input type="hidden" name="command" value="add-treatment">
+                                <input type="submit" value="${resources.Open_medical_card}">
                                 <input type="hidden" name="patientId" value="${record.id}">
                             </form>
                         </td>
@@ -70,13 +74,13 @@
             </table>
         </c:when>
         <c:otherwise>
-            <center><h2>${resources.No_new_patient_yet}!</h2></center>
+            <center><h2>${resources.No_patient_yet}!</h2></center>
         </c:otherwise>
     </c:choose>
     <br>
 
 </center>
-<input type="hidden" name="referer" value="${pageContext.request.requestURI}" />
+<input type="hidden" name="referer" value="${pageContext.request.requestURI}"/>
 </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
 <%@include file="/WEB-INF/jsp/footer.jsp" %>
 </body>

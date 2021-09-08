@@ -23,7 +23,10 @@ public class CommandContainer {
         commands.put("nurses", new NursesList());
         commands.put("add-medical-card", new AddMedicalCard());
         commands.put("postCreateMedicCard", new PostCreateMedicalCard());
-//        commands.put("logout", new LogoutCommand());
+        commands.put("doctorCabinet", new DoctorCabinet());
+        commands.put("logout", new LogoutCommand());
+        commands.put("add-treatment", new TreatmentAssigning());
+        commands.put("postTreatmentAssigning", new PostTreatmentAssigning());
 
 
         logger.debug("Command container was successfully initialized");

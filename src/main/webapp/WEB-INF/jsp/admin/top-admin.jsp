@@ -15,10 +15,11 @@
             </h3>
             </th>
             <th>
-                <form th:action="@{/perform-logout}" method="post">
+                <form action="./controller" method="get">
                     <button style="position: absolute; right: 0px; top: 20px; width: 80px; height: 30px" type="submit">
-                        Log Out
+                        ${resources.Log_out}
                     </button>
+                    <input type="hidden" name="command" value="logout">
                 </form>
             </th>
         </tr>
@@ -27,3 +28,4 @@
     <h3><span style="color:blue">${session.user.firstName} </span></h3>
 <%--    <h3><span style="color:blue">${session.user.firstName+ ' '+ session.user.lastName} </span></h3>--%>
 </center>
+

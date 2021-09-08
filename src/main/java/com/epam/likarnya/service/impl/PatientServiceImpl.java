@@ -1,12 +1,12 @@
 package com.epam.likarnya.service.impl;
 
+import com.epam.likarnya.DTO.PatientDTO;
 import com.epam.likarnya.dao.PatientDAO;
 import com.epam.likarnya.dao.impl.DaoFactory;
 import com.epam.likarnya.exception.DaoException;
 import com.epam.likarnya.exception.Messages;
 import com.epam.likarnya.exception.ServiceException;
 import com.epam.likarnya.model.Patient;
-import com.epam.likarnya.model.User;
 import com.epam.likarnya.service.PatientService;
 import org.apache.log4j.Logger;
 
@@ -45,5 +45,16 @@ public class PatientServiceImpl implements PatientService {
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_READ_PATIENT_BY_ID, e);
         }
 
+    }
+
+    @Override
+    public List<PatientDTO> getPatientsByDoctorId(Long id) throws ServiceException {
+        List<PatientDTO> patients;
+        try {
+            return patients = patientDAO.getPatientsByDoctorId(id);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
+        }
     }
 }

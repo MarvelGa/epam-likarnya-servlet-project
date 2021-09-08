@@ -1,5 +1,6 @@
 package com.epam.likarnya.service.impl;
 
+import com.epam.likarnya.DTO.MedicalCardDTO;
 import com.epam.likarnya.dao.MedicalCardDAO;
 import com.epam.likarnya.dao.UserDAO;
 import com.epam.likarnya.dao.impl.DaoFactory;
@@ -25,5 +26,17 @@ public class MedicalCardServiceImpl implements MedicalCardService {
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_CREATE_MEDICAL_CARD, e);
         }
         return medicalCardId;
+    }
+
+    @Override
+    public MedicalCardDTO getMedicalCardByPatientId(Long patientId) throws ServiceException {
+        MedicalCardDTO medicalCard;
+        try {
+            medicalCard = medicalCardDAO.getMedicalCardByPatientId(patientId);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_MEDICAL_CARD_BY_PATIENTS_ID, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_MEDICAL_CARD_BY_PATIENTS_ID, e);
+        }
+        return medicalCard;
     }
 }

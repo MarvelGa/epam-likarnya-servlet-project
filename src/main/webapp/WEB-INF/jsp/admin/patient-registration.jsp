@@ -16,60 +16,59 @@
         <table>
             <tr>
                 <td>
-                    <c:choose>
-                        <c:when test="${sessionScope.user==null}">
 
-                            <c:if test="${not empty errorMessage and empty exception and empty code}">
-                                <h4 style="color:tomato">${errorMessage}</h4>
-                            </c:if>
-                            <form id="formRegistration" action="/likarnya/controller?command=patient-registration" method="post">
-
-
-                                <div class="field">
-                                    <label>${resources.Enter_your_name}:</label>
-                                    <div class="input"><input type="text" name="name"
-                                                              value='${requestScope.patient.firstName}' id="name"/>
-                                   required </div>
-                                </div>
-
-                                <div class="field">
-                                    <label>${resources.Enter_your_lastName}:</label>
-                                    <div class="input"><input type="text" name="lastName"
-                                                              value='${requestScope.patient.firstName}'
-                                                              id="lastName" required/>
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <label>${resources.Enter_your_b_day}:</label>
-                                    <div class="input"><input type="date" min="1900-01-01" max="${dateOfToday}" name="dateOfBirth"
-                                                              value="${requestScope.patient.birhtDay}"
-                                                              id="dateOfBirth" required/></div>
-                                </div>
+                    <c:if test="${not empty errorMessage and empty exception and empty code}">
+                        <h4 style="color:tomato">${errorMessage}</h4>
+                    </c:if>
+                    <form id="formRegistration" action="/likarnya/controller?command=patient-registration"
+                          method="post">
 
 
-                                <div class="field">
-                                    <label>${resources.Choose_your_gender}:</label>
-                                    <div class="input">
-                                        <select name="gender" id="gender" required>
-                                            <option selected disabled>${resources.Choose_your_gender}:</option>
-                                            <option value="MALE">
-                                                Male
-                                            </option>
-                                            <option value="FEMALE">
-                                                Female
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
+                        <div class="field">
+                            <label>${resources.Enter_your_name}:</label>
+                            <div class="input"><input type="text" name="name"
+                                                      value='${requestScope.patient.firstName}' id="name" required/>
+                            </div>
+                        </div>
 
-                                <div class="submit">
-                                    <button type="submit">${resources.Register}</button>
-                                </div>
+                        <div class="field">
+                            <label>${resources.Enter_your_lastName}:</label>
+                            <div class="input"><input type="text" name="lastName"
+                                                      value='${requestScope.patient.firstName}'
+                                                      id="lastName" required/>
+                            </div>
+                        </div>
 
-                            </form>
-                        </c:when>
-                    </c:choose>
+                        <div class="field">
+                            <label>${resources.Enter_your_b_day}:</label>
+                            <div class="input"><input type="date" min="1900-01-01" max="${dateOfToday}"
+                                                      name="dateOfBirth"
+                                                      value="${requestScope.patient.birhtDay}"
+                                                      id="dateOfBirth" required/></div>
+                        </div>
+
+
+                        <div class="field">
+                            <label>${resources.Choose_your_gender}:</label>
+                            <div class="input">
+                                <select name="gender" required id="gender">
+                                    <option selected disabled>${resources.Choose_your_gender}:</option>
+                                    <option value="MALE">
+                                        Male
+                                    </option>
+                                    <option value="FEMALE">
+                                        Female
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        </br>
+                        <div class="submit">
+                            <button type="submit">${resources.Register}</button>
+                        </div>
+
+                    </form>
+
                 </td>
 
                 <td>

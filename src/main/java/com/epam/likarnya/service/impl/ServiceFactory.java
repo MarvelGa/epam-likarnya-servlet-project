@@ -1,10 +1,7 @@
 package com.epam.likarnya.service.impl;
 
 import com.epam.likarnya.dao.PatientDAO;
-import com.epam.likarnya.service.CategoryService;
-import com.epam.likarnya.service.MedicalCardService;
-import com.epam.likarnya.service.PatientService;
-import com.epam.likarnya.service.UserService;
+import com.epam.likarnya.service.*;
 
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
@@ -21,6 +18,8 @@ public class ServiceFactory {
 
     private final MedicalCardService medicalCardService = new MedicalCardServiceImpl();
 
+    private final TreatmentService treatmentService = new TreatmentServiceImpl();
+
     public UserService getUserService() {
         return userService;
     }
@@ -35,5 +34,9 @@ public class ServiceFactory {
 
     public MedicalCardService getMedicalCardService() {
         return medicalCardService;
+    }
+
+    public TreatmentService getTreatmentService() {
+        return treatmentService;
     }
 }

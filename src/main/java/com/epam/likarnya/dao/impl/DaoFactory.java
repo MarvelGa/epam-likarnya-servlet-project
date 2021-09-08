@@ -1,9 +1,6 @@
 package com.epam.likarnya.dao.impl;
 
-import com.epam.likarnya.dao.CategoryDAO;
-import com.epam.likarnya.dao.MedicalCardDAO;
-import com.epam.likarnya.dao.PatientDAO;
-import com.epam.likarnya.dao.UserDAO;
+import com.epam.likarnya.dao.*;
 
 public class DaoFactory {
     private static final DaoFactory instance = new DaoFactory();
@@ -16,6 +13,7 @@ public class DaoFactory {
     private final PatientDAO patientDao = new PatientDAOImpl();
     private final CategoryDAO categoryDao = new CategoryDAOImpl();
     private final MedicalCardDAO medicCardDAO = new MedicalCardDAOImpl();
+    private final TreatmentDAO treatmentDAO = new TreatmentDAOImpl();
 
     public UserDAO getUserDao() {
         return userDao;
@@ -31,5 +29,9 @@ public class DaoFactory {
 
     public MedicalCardDAO getMedicCardDAO() {
         return medicCardDAO;
+    }
+
+    public TreatmentDAO getTreatmentDAO() {
+        return treatmentDAO;
     }
 }
