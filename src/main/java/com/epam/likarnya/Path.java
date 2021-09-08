@@ -16,6 +16,7 @@ public final class Path {
     public static final String PAGE__MEDIC_REGISTRATION = "/WEB-INF/jsp/admin/medworker-registration.jsp";
     public static final String PAGE__DOCTORS = "/WEB-INF/jsp/admin/list-doctors.jsp";
     public static final String PAGE__NURSES= "/WEB-INF/jsp/admin/list-nurses.jsp";
+    public static final String PAGE__ADDING_MED_CAD= "/WEB-INF/jsp/admin/add-medcard.jsp";
 
 
 

@@ -6,6 +6,7 @@ import com.epam.likarnya.exception.DaoException;
 import com.epam.likarnya.exception.Messages;
 import com.epam.likarnya.exception.ServiceException;
 import com.epam.likarnya.model.Patient;
+import com.epam.likarnya.model.User;
 import com.epam.likarnya.service.PatientService;
 import org.apache.log4j.Logger;
 
@@ -32,5 +33,17 @@ public class PatientServiceImpl implements PatientService {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENT, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENT, e);
         }
+    }
+
+    @Override
+    public Patient getPatientById(Long id) throws ServiceException {
+        Patient patient;
+        try {
+            return patient = patientDAO.findById(id);
+        }catch (DaoException e){
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_READ_PATIENT_BY_ID, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_READ_PATIENT_BY_ID, e);
+        }
+
     }
 }

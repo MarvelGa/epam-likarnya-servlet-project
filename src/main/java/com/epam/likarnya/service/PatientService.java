@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PatientService {
     List<Patient> getPatientWithOutMedicalCard() throws ServiceException;
+    Patient getPatientById(Long id) throws ServiceException;
 }

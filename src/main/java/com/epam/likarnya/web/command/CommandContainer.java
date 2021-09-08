@@ -21,25 +21,10 @@ public class CommandContainer {
         commands.put("medical-registration", new PostMedicalRegistration());
         commands.put("doctors", new DoctorsList());
         commands.put("nurses", new NursesList());
-
-//        commands.put("register", new PostRegistrationCommand());
-//        commands.put("registration", new GetRegistrationCommand());
+        commands.put("add-medical-card", new AddMedicalCard());
+        commands.put("postCreateMedicCard", new PostCreateMedicalCard());
 //        commands.put("logout", new LogoutCommand());
-//        commands.put("adminCabinet", new GetAdminCabinet());
-//        commands.put("userCabinet", new GetUserCabinet());
-//        commands.put("create-delivery", new GetCreateDelivery());
-//        commands.put("postCreateDelivery", new PostCreateDelivery());
-//        commands.put("userOrdersPage", new UserOrders());
-//        commands.put("allUserDeliveries", new AllUserDeliveries());
-//        commands.put("getAllUsersOrders", new GetAllUsersOrders());
-//        commands.put("changeStatusDelivery", new GetChangeStatusDelivery());
-//        commands.put("confirmationChangeStatus", new PostChangeStatusDelivery());
-//        commands.put("displayAllUsers", new DisplayAllUsers());
-//        commands.put("getOrders", new DisplayOrders());
-//        commands.put("createOrderByAdmin", new CreateDeliveryByAdmin());
-//        commands.put("listDeliveries", new ListDeliveries());
-//        commands.put("commandNotFound", new CommandNotFound());
-//        commands.put("aboutUs", new AboutUs());
+
 
         logger.debug("Command container was successfully initialized");
         logger.trace("Number of commands --> " + commands.size());

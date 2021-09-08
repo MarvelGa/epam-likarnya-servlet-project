@@ -1,5 +1,6 @@
 package com.epam.likarnya.dao.impl;
 
+import com.epam.likarnya.DTO.DoctorDTO;
 import com.epam.likarnya.dao.UserDAO;
 import com.epam.likarnya.dao.dbmanager.DBManager;
 import com.epam.likarnya.exception.DaoException;
@@ -10,6 +11,8 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private static final Logger logger = LogManager.getLogger(UserDAOImpl.class);
@@ -17,6 +20,7 @@ public class UserDAOImpl implements UserDAO {
     private static final String CREAT_PATIENT = "INSERT INTO patients(first_name, last_name, birth_day, gender) VALUES (?, ?, ?, ?);";
     private static final String CREAT_DOCTOR = "INSERT INTO users(first_name, last_name, email, password, `role`, category_id) VALUES (?, ?, ?, ?, ?, ?);";
     private static final String CREAT_NURSE = "INSERT INTO users(first_name, last_name, email, password, `role`) VALUES (?, ?, ?, ?, ?);";
+    private static final String GET_DOCTORS_BY_CATEGORY = "SELECT u.id, u.first_name, u.last_name, u.role, cat.title AS category FROM users u INNER JOIN categories cat ON u.category_id=cat.id WHERE u.role='DOCTOR' AND cat.id=?;";
 
     @Override
     public User getUserByEmail(String email) throws DaoException {
@@ -119,6 +123,41 @@ public class UserDAOImpl implements UserDAO {
         return id;
     }
 
+    @Override
+    public List<DoctorDTO> findDoctorsByCategoryId(Long id) throws DaoException {
+        final String query = GET_DOCTORS_BY_CATEGORY;
+        List<DoctorDTO> doctors = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                DoctorDTO doctorDTO = new DoctorDTO();
+                doctorDTO.setId(rs.getLong("id"));
+                doctorDTO.setFirstName(rs.getString("first_name"));
+                doctorDTO.setLastName(rs.getString("last_name"));
+                doctorDTO.setRole(User.Role.valueOf(rs.getString("role")));
+                doctorDTO.setCategory(rs.getString("category"));
+                doctors.add(doctorDTO);
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return doctors;
+    }
+
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getLong(1));
@@ -130,4 +169,5 @@ public class UserDAOImpl implements UserDAO {
         user.setCategoryId(rs.getLong(7));
         return user;
     }
+
 }

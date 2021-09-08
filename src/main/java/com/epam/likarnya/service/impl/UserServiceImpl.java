@@ -1,5 +1,6 @@
 package com.epam.likarnya.service.impl;
 
+import com.epam.likarnya.DTO.DoctorDTO;
 import com.epam.likarnya.dao.UserDAO;
 import com.epam.likarnya.dao.impl.DaoFactory;
 import com.epam.likarnya.exception.DaoException;
@@ -9,6 +10,8 @@ import com.epam.likarnya.model.Patient;
 import com.epam.likarnya.model.User;
 import com.epam.likarnya.service.UserService;
 import org.apache.log4j.Logger;
+
+import java.util.List;
 
 public class UserServiceImpl implements UserService {
     private DaoFactory daoFactory = DaoFactory.getInstance();
@@ -57,5 +60,10 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
         }
         return inserted;
+    }
+
+    @Override
+    public List<DoctorDTO> getDoctorsByCategoryId(Long id) throws ServiceException {
+        return userDAO.findDoctorsByCategoryId(id);
     }
 }

@@ -61,6 +61,7 @@
                             <form action="./controller" method="GET">
                                 <input type="hidden" name="command" value="add-medical-card">
                                 <input type="submit" value="${resources.Add_medical_card}">
+                                <input type="hidden" name="patientId" value="${record.id}">
                             </form>
                         </td>
                     </tr>

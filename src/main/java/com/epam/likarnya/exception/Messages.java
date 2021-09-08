@@ -27,4 +27,5 @@ public class Messages {
     public static final String ERR_SERVICE_LAYER_CANNOT_INSERT_USER = "Cannot insert new user at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_READ_ALL_USERS = "Cannot read all users at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENT = "Cannot read all patients at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_READ_PATIENT_BY_ID = "Cannot read patient by id at service layer";
 }
