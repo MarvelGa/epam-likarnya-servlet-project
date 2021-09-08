@@ -30,7 +30,7 @@ create table statements
     created_at     date       not null,
     patient_status varchar(255) not null,
     patient_id     bigint      not null,
-    changed        date        not null,
+    changed        date        null,
     constraint FK_patient_id
         foreign key (patient_id) references patients (id)
 );

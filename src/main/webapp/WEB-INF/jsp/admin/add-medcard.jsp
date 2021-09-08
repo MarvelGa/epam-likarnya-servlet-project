@@ -84,6 +84,15 @@
                                 </select>
                             </td>
                         </tr>
+
+                        <tr>
+                            <th>
+                                <label>Enter the Complaints of Patient</label>
+                            </th>
+                            <td>
+                                <input type="text" name="complaints" id="complaints" required/>
+                            </td>
+                        </tr>
                     </table>
                     </br>
 
