@@ -34,4 +34,6 @@ public class Messages {
     public static final String ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID = "Cannot find patients by doctor id at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_MEDICAL_CARD_BY_PATIENTS_ID = "Cannot obtain medical card by patient id at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_CREATE_TREATMENT_AND_SET_DIAGNOSIS = "Cannot create treatment and set the diagnosis at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_EXECUTE_TREATMENT = "Cannot create execute treatment for patient at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID = "Cannot obtain patient's history by doctor id at service layer";
 }

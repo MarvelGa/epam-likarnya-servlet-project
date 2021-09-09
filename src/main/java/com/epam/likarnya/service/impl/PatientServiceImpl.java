@@ -1,6 +1,7 @@
 package com.epam.likarnya.service.impl;
 
 import com.epam.likarnya.DTO.PatientDTO;
+import com.epam.likarnya.DTO.TreatmentPatientDTO;
 import com.epam.likarnya.dao.PatientDAO;
 import com.epam.likarnya.dao.impl.DaoFactory;
 import com.epam.likarnya.exception.DaoException;
@@ -55,6 +56,28 @@ public class PatientServiceImpl implements PatientService {
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
+        }
+    }
+
+    @Override
+    public List<TreatmentPatientDTO> getPatientsForTreatmentByDoctorId(Long id) throws ServiceException {
+        List<TreatmentPatientDTO> patients;
+        try {
+            return patients = patientDAO.getPatientsForTreatmentByDoctorId(id);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
+        }
+    }
+
+    @Override
+    public List<TreatmentPatientDTO> getPatientsHistoryByDoctorId(Long id) throws ServiceException {
+        List<TreatmentPatientDTO> patients;
+        try {
+            return patients = patientDAO.getPatientsHistoryByDoctorId(id);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID, e);
         }
     }
 }

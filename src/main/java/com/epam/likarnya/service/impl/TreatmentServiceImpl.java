@@ -27,4 +27,16 @@ public class TreatmentServiceImpl implements TreatmentService {
         }
         return inserted;
     }
+
+    @Override
+    public boolean executeTreatment(Long doctorId, Long treatmentId, Long statementId) throws ServiceException {
+        boolean executed;
+        try {
+            executed = treatmentDAO.executeTreatment(doctorId, treatmentId, statementId);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_EXECUTE_TREATMENT, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_EXECUTE_TREATMENT, e);
+        }
+        return executed;
+    }
 }

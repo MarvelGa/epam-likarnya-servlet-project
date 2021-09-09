@@ -35,6 +35,6 @@ public class PostCreateMedicalCard implements Command {
 
         medicalCardService.createMedicalCard(statement, java.lang.Long.valueOf(doctorId), complaints);
 
-        return Path.ADMIN_CABINET;
+        return Path.COMMAND__ADMIN_CABINET;
     }
 }

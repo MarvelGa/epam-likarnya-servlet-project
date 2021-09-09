@@ -22,10 +22,13 @@ public final class Path {
    //doctor
    public static final String PAGE__DOCTOR_CABINET= "/WEB-INF/jsp/doctor/doctorCabinet.jsp";
    public static final String PAGE__TREATMENT_ASSIGNING= "/WEB-INF/jsp/doctor/treatment-assigning.jsp";
+   public static final String PAGE__DOCTOR_TREATMENT= "/WEB-INF/jsp/doctor/treatment-patients.jsp";
+   public static final String PAGE__DOCTOR_TREATMENT_HISTORY= "/WEB-INF/jsp/doctor/history.jsp";
 
 
     public static final String COMMAND__NURSES_LIST = "controller?command=nurses";
     public static final String COMMAND__DOCTORS_LIST = "controller?command=doctors";
+    public static final String COMMAND__DOCTORS_PATIENTS_FOR_TREATMENT = "controller?command=doctor-treatment-patients";
 
 
     public static final String COMMAND__ADMIN_CABINET = "controller?command=adminCabinet";

@@ -27,6 +27,9 @@ public class CommandContainer {
         commands.put("logout", new LogoutCommand());
         commands.put("add-treatment", new TreatmentAssigning());
         commands.put("postTreatmentAssigning", new PostTreatmentAssigning());
+        commands.put("doctor-treatment-patients", new TreatmentPatient());
+        commands.put("execute-treatment", new PostExecuteTreatment());
+        commands.put("doctor-cabinet-history", new DoctorHistory());
 
 
         logger.debug("Command container was successfully initialized");

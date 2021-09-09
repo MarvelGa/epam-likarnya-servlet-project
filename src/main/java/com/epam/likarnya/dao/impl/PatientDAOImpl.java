@@ -2,6 +2,7 @@ package com.epam.likarnya.dao.impl;
 
 import com.epam.likarnya.DTO.DoctorDTO;
 import com.epam.likarnya.DTO.PatientDTO;
+import com.epam.likarnya.DTO.TreatmentPatientDTO;
 import com.epam.likarnya.dao.PatientDAO;
 import com.epam.likarnya.dao.dbmanager.DBManager;
 import com.epam.likarnya.exception.DaoException;
@@ -20,6 +21,27 @@ public class PatientDAOImpl implements PatientDAO {
     private static final String GET_NEW_PATIENT_WITHOUT_M_CARD = "SELECT p.id, p.first_name, p.last_name, p.gender, p.birth_day FROM patients p WHERE p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='NEW' OR st.patient_status='DISCHARGED' OR st.patient_status='DIAGNOSED')";
     private static final String GET_PATIENT_BY_ID = "SELECT * FROM patients WHERE id=?";
     private static final String GET_PATIENTS_BY_DOCTOR_ID = "SELECT p.id AS id, p.first_name AS firstName, p.last_name AS lastName, p.birth_day as dateOfBirth, p.gender AS gender, mc.complaints as complaints FROM patients p, statements st, medical_cards mc WHERE p.id=st.patient_id AND mc.statement_id=st.id AND st.patient_status='NEW' AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u WHERE st.id=mc.statement_id AND mc.doctor_id=u.id AND st.patient_status='NEW' AND u.id=?);";
+    private static final String GET_PATIENTS_FOR_TREATMENT = "SELECT p.id AS id, p.first_name AS firstName, p.last_name AS lastName, p.birth_day as dateOfBirth, p.gender AS gender, mc.complaints as complaints, mc.diagnosis AS diagnosis, tr.appointment AS appointment, tr.appointment_status AS appointmentStatus, u.first_name AS doctorFirstName, u.last_name AS doctorLastName, c.title AS doctorCategory, tr.id AS treatmentId, st.id AS statementId FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id\n" +
+            "AND mc.statement_id =st.id AND p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='DISCHARGED') \n" +
+            "AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id AND mc.doctor_id=u.id AND tr.appointment_status='NOT_EXECUTED' AND st.patient_status='DIAGNOSED' AND u.id=?);";
+
+    private static final String GET_PATIENTS_HISTORY_BY_DOCTOR_ID =" SELECT p.id AS id,\n" +
+            " p.first_name AS firstName,\n" +
+            " p.last_name AS lastName,\n" +
+            " p.birth_day as dateOfBirth,\n" +
+            " p.gender AS gender,\n" +
+            " mc.complaints as complaints,\n" +
+            " mc.diagnosis AS diagnosis,\n" +
+            " tr.appointment AS appointment,\n" +
+            " tr.appointment_status AS appointmentStatus,\n" +
+            " u.first_name AS doctorFirstName,\n" +
+            " u.last_name AS doctorLastName,\n" +
+            " c.title AS doctorCategory\n" +
+            " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c \n" +
+            " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id AND mc.statement_id =st.id\n" +
+            " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr \n" +
+            " WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id AND mc.doctor_id=u.id AND tr.appointment_status='EXECUTED' AND st.patient_status='DISCHARGED' AND u.id=?);";
+
 
     @Override
     public List<Patient> getPatientWithMedicCard() {
@@ -111,6 +133,66 @@ public class PatientDAOImpl implements PatientDAO {
         return patients;
     }
 
+    @Override
+    public List<TreatmentPatientDTO> getPatientsForTreatmentByDoctorId(Long id) {
+        final String query = GET_PATIENTS_FOR_TREATMENT;
+        List<TreatmentPatientDTO> patients = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                patients.add(extractPatientForTreatmentFromResultSet(rs));
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return patients;
+    }
+
+    @Override
+    public List<TreatmentPatientDTO> getPatientsHistoryByDoctorId(Long id) {
+        final String query = GET_PATIENTS_HISTORY_BY_DOCTOR_ID;
+        List<TreatmentPatientDTO> patients = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                patients.add(extractPatientHistoryFromResultSet(rs));
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return patients;
+    }
+
     private Patient extractPatientFromResultSet(ResultSet rs) throws SQLException {
         Patient patient = new Patient();
         patient.setId(rs.getLong("id"));
@@ -119,5 +201,41 @@ public class PatientDAOImpl implements PatientDAO {
         patient.setDateOfBirth(LocalDate.parse(rs.getString("birth_day")));
         patient.setGender(Patient.Gender.valueOf(rs.getString("gender")));
         return patient;
+    }
+
+    private TreatmentPatientDTO extractPatientForTreatmentFromResultSet(ResultSet rs) throws SQLException {
+        TreatmentPatientDTO patientForTreatment = new TreatmentPatientDTO();
+        patientForTreatment.setId(rs.getLong("id"));
+        patientForTreatment.setFirstName(rs.getString("firstName"));
+        patientForTreatment.setLastName(rs.getString("lastName"));
+        patientForTreatment.setDateOfBirth(rs.getString("dateOfBirth"));
+        patientForTreatment.setGender(rs.getString("gender"));
+        patientForTreatment.setComplaints(rs.getString("complaints"));
+        patientForTreatment.setDiagnosis(rs.getString("diagnosis"));
+        patientForTreatment.setAppointment(rs.getString("appointment"));
+        patientForTreatment.setAppointmentStatus(rs.getString("appointmentStatus"));
+        patientForTreatment.setDoctorFirstName(rs.getString("doctorFirstName"));
+        patientForTreatment.setDoctorLastName(rs.getString("doctorLastName"));
+        patientForTreatment.setDoctorCategory(rs.getString("doctorCategory"));
+        patientForTreatment.setTreatmentId(rs.getString("treatmentId"));
+        patientForTreatment.setStatementId(rs.getString("statementId"));
+        return patientForTreatment;
+    }
+
+    private TreatmentPatientDTO extractPatientHistoryFromResultSet(ResultSet rs) throws SQLException {
+        TreatmentPatientDTO patientForTreatment = new TreatmentPatientDTO();
+        patientForTreatment.setId(rs.getLong("id"));
+        patientForTreatment.setFirstName(rs.getString("firstName"));
+        patientForTreatment.setLastName(rs.getString("lastName"));
+        patientForTreatment.setDateOfBirth(rs.getString("dateOfBirth"));
+        patientForTreatment.setGender(rs.getString("gender"));
+        patientForTreatment.setComplaints(rs.getString("complaints"));
+        patientForTreatment.setDiagnosis(rs.getString("diagnosis"));
+        patientForTreatment.setAppointment(rs.getString("appointment"));
+        patientForTreatment.setAppointmentStatus(rs.getString("appointmentStatus"));
+        patientForTreatment.setDoctorFirstName(rs.getString("doctorFirstName"));
+        patientForTreatment.setDoctorLastName(rs.getString("doctorLastName"));
+        patientForTreatment.setDoctorCategory(rs.getString("doctorCategory"));
+        return patientForTreatment;
     }
 }
