@@ -1,6 +1,5 @@
 package com.epam.likarnya.dao.impl;
 
-import com.epam.likarnya.DTO.DoctorDTO;
 import com.epam.likarnya.DTO.PatientDTO;
 import com.epam.likarnya.DTO.TreatmentPatientDTO;
 import com.epam.likarnya.dao.PatientDAO;
@@ -8,7 +7,6 @@ import com.epam.likarnya.dao.dbmanager.DBManager;
 import com.epam.likarnya.exception.DaoException;
 import com.epam.likarnya.exception.Messages;
 import com.epam.likarnya.model.Patient;
-import com.epam.likarnya.model.User;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -18,14 +16,42 @@ import java.util.List;
 
 public class PatientDAOImpl implements PatientDAO {
     private static final Logger logger = Logger.getLogger(PatientDAOImpl.class);
-    private static final String GET_NEW_PATIENT_WITHOUT_M_CARD = "SELECT p.id, p.first_name, p.last_name, p.gender, p.birth_day FROM patients p WHERE p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='NEW' OR st.patient_status='DISCHARGED' OR st.patient_status='DIAGNOSED')";
-    private static final String GET_PATIENT_BY_ID = "SELECT * FROM patients WHERE id=?";
-    private static final String GET_PATIENTS_BY_DOCTOR_ID = "SELECT p.id AS id, p.first_name AS firstName, p.last_name AS lastName, p.birth_day as dateOfBirth, p.gender AS gender, mc.complaints as complaints FROM patients p, statements st, medical_cards mc WHERE p.id=st.patient_id AND mc.statement_id=st.id AND st.patient_status='NEW' AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u WHERE st.id=mc.statement_id AND mc.doctor_id=u.id AND st.patient_status='NEW' AND u.id=?);";
-    private static final String GET_PATIENTS_FOR_TREATMENT = "SELECT p.id AS id, p.first_name AS firstName, p.last_name AS lastName, p.birth_day as dateOfBirth, p.gender AS gender, mc.complaints as complaints, mc.diagnosis AS diagnosis, tr.appointment AS appointment, tr.appointment_status AS appointmentStatus, u.first_name AS doctorFirstName, u.last_name AS doctorLastName, c.title AS doctorCategory, tr.id AS treatmentId, st.id AS statementId FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id\n" +
-            "AND mc.statement_id =st.id AND p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='DISCHARGED') \n" +
-            "AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id AND mc.doctor_id=u.id AND tr.appointment_status='NOT_EXECUTED' AND st.patient_status='DIAGNOSED' AND u.id=?);";
 
-    private static final String GET_PATIENTS_HISTORY_BY_DOCTOR_ID =" SELECT p.id AS id,\n" +
+    private static final String GET_NEW_PATIENT_WITHOUT_M_CARD = "SELECT p.id, p.first_name, p.last_name, p.gender, p.birth_day" +
+            " FROM patients p WHERE p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='NEW' OR st.patient_status='DISCHARGED' OR st.patient_status='DIAGNOSED')";
+
+    private static final String GET_PATIENT_BY_ID = "SELECT * FROM patients WHERE id=?";
+
+    private static final String GET_PATIENTS_BY_DOCTOR_ID = "SELECT p.id AS id," +
+            " p.first_name AS firstName," +
+            " p.last_name AS lastName," +
+            " p.birth_day as dateOfBirth," +
+            " p.gender AS gender," +
+            " mc.complaints as complaints" +
+            " FROM patients p, statements st, medical_cards mc" +
+            " WHERE p.id=st.patient_id AND mc.statement_id=st.id AND st.patient_status='NEW' " +
+            " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u WHERE st.id=mc.statement_id AND mc.doctor_id=u.id AND st.patient_status='NEW' AND u.id=?);";
+
+    private static final String GET_PATIENTS_FOR_TREATMENT = "SELECT p.id AS id," +
+            " p.first_name AS firstName," +
+            " p.last_name AS lastName," +
+            " p.birth_day as dateOfBirth," +
+            " p.gender AS gender," +
+            " mc.complaints as complaints," +
+            " mc.diagnosis AS diagnosis," +
+            " tr.appointment AS appointment," +
+            " tr.appointment_status AS appointmentStatus," +
+            " u.first_name AS doctorFirstName," +
+            " u.last_name AS doctorLastName," +
+            " c.title AS doctorCategory," +
+            " tr.id AS treatmentId," +
+            " st.id AS statementId" +
+            " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c" +
+            " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id\n" +
+            " AND mc.statement_id =st.id AND p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='DISCHARGED') \n" +
+            " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id AND mc.doctor_id=u.id AND tr.appointment_status='NOT_EXECUTED' AND st.patient_status='DIAGNOSED' AND u.id=?);";
+
+    private static final String GET_PATIENTS_HISTORY_BY_DOCTOR_ID = " SELECT p.id AS id,\n" +
             " p.first_name AS firstName,\n" +
             " p.last_name AS lastName,\n" +
             " p.birth_day as dateOfBirth,\n" +

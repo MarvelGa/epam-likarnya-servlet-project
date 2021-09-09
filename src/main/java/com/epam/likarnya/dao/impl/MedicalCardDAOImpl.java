@@ -5,9 +5,7 @@ import com.epam.likarnya.dao.MedicalCardDAO;
 import com.epam.likarnya.dao.dbmanager.DBManager;
 import com.epam.likarnya.exception.DaoException;
 import com.epam.likarnya.exception.Messages;
-import com.epam.likarnya.model.MedicalCard;
 import com.epam.likarnya.model.Statement;
-import com.epam.likarnya.model.User;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
