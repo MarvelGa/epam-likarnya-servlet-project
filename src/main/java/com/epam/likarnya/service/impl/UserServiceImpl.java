@@ -1,12 +1,12 @@
 package com.epam.likarnya.service.impl;
 
 import com.epam.likarnya.DTO.DoctorDTO;
+import com.epam.likarnya.DTO.NurseDTO;
 import com.epam.likarnya.dao.UserDAO;
 import com.epam.likarnya.dao.impl.DaoFactory;
 import com.epam.likarnya.exception.DaoException;
 import com.epam.likarnya.exception.Messages;
 import com.epam.likarnya.exception.ServiceException;
-import com.epam.likarnya.model.Patient;
 import com.epam.likarnya.model.User;
 import com.epam.likarnya.service.UserService;
 import org.apache.log4j.Logger;
@@ -39,18 +39,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public long addPatient(Patient patient) throws ServiceException {
-        long inserted;
-        try {
-            inserted = userDAO.createPatient(patient);
-        } catch (DaoException e) {
-            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
-            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
-        }
-        return inserted;
-    }
-
-    @Override
     public long addMedicalWorker(User user) throws ServiceException {
         long inserted;
         try {
@@ -65,5 +53,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<DoctorDTO> getDoctorsByCategoryId(Long id) throws ServiceException {
         return userDAO.findDoctorsByCategoryId(id);
+    }
+
+    @Override
+    public List<DoctorDTO> getDoctors() throws ServiceException {
+        List<DoctorDTO> doctors;
+        try {
+            return doctors = userDAO.getDoctors();
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+        }
+    }
+
+    @Override
+    public List<NurseDTO> getNurses() throws ServiceException {
+        List<NurseDTO> nurses;
+        try {
+            return nurses = userDAO.getNurses();
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_NURSES, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_NURSES, e);
+        }
     }
 }

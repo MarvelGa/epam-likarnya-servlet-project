@@ -12,13 +12,8 @@
 <body>
 <center>
     <%@include file="/WEB-INF/jsp/doctor/top-doctor.jsp" %>
-    <%--    <center><h1>${resources.Admin_cabinet}</h1></center>--%>
-    <h2 style="color: cadetblue">${resources.Patient_for_diagnosis}</h2>
 
-    <%--    <form action="./controller" method="GET">--%>
-    <%--        <input type="hidden" name="command" value="patient-form">--%>
-    <%--        <input type="submit" value="${resources.Add_new_patient}">--%>
-    <%--    </form>--%>
+    <h2 style="color: cadetblue">${resources.Patient_for_diagnosis}</h2>
 
     </br>
     <form action="/likarnya/controller?command=postTreatmentAssigning" method="POST">

@@ -13,4 +13,5 @@ public interface PatientService {
     List<PatientDTO> getPatientsByDoctorId(Long id) throws ServiceException;
     List<TreatmentPatientDTO> getPatientsForTreatmentByDoctorId(Long id) throws ServiceException;
     List<TreatmentPatientDTO> getPatientsHistoryByDoctorId(Long id)throws ServiceException;
+    long addPatient(Patient patient) throws ServiceException;
 }

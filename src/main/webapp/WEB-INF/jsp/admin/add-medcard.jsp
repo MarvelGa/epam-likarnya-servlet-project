@@ -7,6 +7,7 @@
 <head>
     <title>${resources.Admin_personal_cabinet}</title>
     <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="static/topstyle.css">
 </head>
 <body>
 <center>

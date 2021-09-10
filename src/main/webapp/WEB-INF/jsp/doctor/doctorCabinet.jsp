@@ -12,13 +12,6 @@
 <body>
 <center>
     <%@include file="/WEB-INF/jsp/doctor/top-doctor.jsp" %>
-    <%--    <center><h1>${resources.Admin_cabinet}</h1></center>--%>
-    <h2 style="color: cadetblue">${resources.Patient_for_diagnosis}</h2>
-
-    <%--    <form action="./controller" method="GET">--%>
-    <%--        <input type="hidden" name="command" value="patient-form">--%>
-    <%--        <input type="submit" value="${resources.Add_new_patient}">--%>
-    <%--    </form>--%>
 
     <c:choose>
         <c:when test="${requestScope.doctorPatients.size()!=0}">
@@ -26,6 +19,7 @@
             <%
                 int counter = 1;
             %>
+            <h2 style="color: cadetblue">${resources.Patient_for_diagnosis}</h2>
             <table border="1">
                 <tr>
                     <th>No.</th>

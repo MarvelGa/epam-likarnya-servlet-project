@@ -17,6 +17,8 @@ import java.util.List;
 public class PatientDAOImpl implements PatientDAO {
     private static final Logger logger = Logger.getLogger(PatientDAOImpl.class);
 
+    private static final String CREAT_PATIENT = "INSERT INTO patients(first_name, last_name, birth_day, gender) VALUES (?, ?, ?, ?);";
+
     private static final String GET_NEW_PATIENT_WITHOUT_M_CARD = "SELECT p.id, p.first_name, p.last_name, p.gender, p.birth_day" +
             " FROM patients p WHERE p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='NEW' OR st.patient_status='DISCHARGED' OR st.patient_status='DIAGNOSED')";
 
@@ -217,6 +219,39 @@ public class PatientDAOImpl implements PatientDAO {
             DBManager.close(con, stmt, rs);
         }
         return patients;
+    }
+
+    @Override
+    public long createPatient(Patient patient) throws DaoException {
+        int id = -1;
+        final String query = CREAT_PATIENT;
+        DBManager dbm;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, patient.getFirstName());
+            pstmt.setString(2, patient.getLastName());
+            pstmt.setDate(3, Date.valueOf(patient.getDateOfBirth()));
+            pstmt.setString(4, String.valueOf(patient.getGender()));
+
+            pstmt.executeUpdate();
+            rs = pstmt.getGeneratedKeys();
+            if (rs != null && rs.next()) {
+                id = rs.getInt(1);
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_INSERT_USER, ex);
+            throw new DaoException(Messages.ERR_CANNOT_INSERT_USER, ex);
+        } finally {
+            DBManager.close(con, pstmt, rs);
+        }
+        return id;
     }
 
     private Patient extractPatientFromResultSet(ResultSet rs) throws SQLException {

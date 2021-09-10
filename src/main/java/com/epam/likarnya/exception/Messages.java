@@ -24,6 +24,8 @@ public class Messages {
     public static final String ERR_CANNOT_CREATE_MEDIC_CARD = "Cannot create medical card";
     public static final String ERR_CANNOT_OBTAIN_MEDICAL_CARD_BY_PATIENT_ID = "Cannot obtain medical card by patient's id";
     public static final String ERR_CANNOT_CREATE_TREATMENT_AND_SET_DIAGNOSIS = "Cannot create treatment and set the diagnosis";
+    public static final String ERR_CANNOT_READ_ALL_DOCTORS = "Cannot read all doctors";
+    public static final String ERR_CANNOT_READ_ALL_NURSES = "Cannot read nurses doctors";
 
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_USER_BY_EMAIL = "Cannot obtain a user by its email at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_INSERT_USER = "Cannot insert new user at service layer";
@@ -36,4 +38,7 @@ public class Messages {
     public static final String ERR_SERVICE_LAYER_CANNOT_CREATE_TREATMENT_AND_SET_DIAGNOSIS = "Cannot create treatment and set the diagnosis at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_EXECUTE_TREATMENT = "Cannot create execute treatment for patient at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID = "Cannot obtain patient's history by doctor id at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS = "Cannot find doctors at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_FIND_NURSES = "Cannot find nurses at service layer";
+
 }

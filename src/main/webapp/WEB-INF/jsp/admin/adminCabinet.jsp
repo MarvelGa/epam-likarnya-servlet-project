@@ -7,12 +7,11 @@
 <head>
     <title>${resources.Admin_personal_cabinet}</title>
     <meta charset="UTF-8"/>
-<%--    <link rel="stylesheet" href="static/topstyle.css">--%>
+    <link rel="stylesheet" href="static/topstyle.css">
 </head>
 <body>
 <center>
     <%@include file="/WEB-INF/jsp/admin/top-admin.jsp" %>
-<%--    <center><h1>${resources.Admin_cabinet}</h1></center>--%>
     <h2 style="color: cadetblue">${resources.New_patients}</h2>
 
     <form action="./controller" method="GET">

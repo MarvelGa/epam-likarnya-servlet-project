@@ -3,6 +3,7 @@ package com.epam.likarnya.web.command;
 import com.epam.likarnya.Path;
 import com.epam.likarnya.exception.AppException;
 import com.epam.likarnya.model.Patient;
+import com.epam.likarnya.service.PatientService;
 import com.epam.likarnya.service.UserService;
 import com.epam.likarnya.service.impl.ServiceFactory;
 import com.epam.likarnya.web.validator.DataValidator;
@@ -23,6 +24,7 @@ import java.util.List;
 public class PostPatientRegistration implements Command {
     private static final Logger logger = Logger.getLogger(PostPatientRegistration.class);
     private UserService userService = ServiceFactory.getInstance().getUserService();
+    private PatientService patientService = ServiceFactory.getInstance().getPatientService();
 
     public PostPatientRegistration() {
     }
@@ -71,7 +73,7 @@ public class PostPatientRegistration implements Command {
             newPatient.setDateOfBirth(LocalDate.parse(bDay));
             newPatient.setGender(Patient.Gender.valueOf(gender));
             logger.trace("Saving new patient: " + newPatient);
-            userService.addPatient(newPatient);
+            patientService.addPatient(newPatient);
             logger.debug(String.format("redirect --> %s", Path.COMMAND__ADMIN_CABINET));
             return Path.COMMAND__ADMIN_CABINET;
         }

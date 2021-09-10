@@ -12,16 +12,10 @@
 <body>
 <center>
     <%@include file="/WEB-INF/jsp/doctor/top-doctor.jsp" %>
-    <%--    <center><h1>${resources.Admin_cabinet}</h1></center>--%>
-    <h2 style="color: cadetblue">${resources.History}</h2>
-
-    <%--    <form action="./controller" method="GET">--%>
-    <%--        <input type="hidden" name="command" value="patient-form">--%>
-    <%--        <input type="submit" value="${resources.Add_new_patient}">--%>
-    <%--    </form>--%>
 
     <c:choose>
         <c:when test="${patientsHistory.size()!=0}">
+            <h2 style="color: cadetblue">${resources.History}</h2>
             </br>
             <%
                 int counter = 1;
@@ -73,7 +67,7 @@
                         </td>
 
                         <td>
-                                ${record.doctorCategory}  -  ${record.doctorFirstName } ${record.doctorLastName}
+                                ${record.doctorCategory} - ${record.doctorFirstName } ${record.doctorLastName}
                         </td>
 
                     </tr>

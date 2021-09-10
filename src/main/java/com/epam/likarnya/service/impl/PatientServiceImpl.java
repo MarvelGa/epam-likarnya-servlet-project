@@ -80,4 +80,16 @@ public class PatientServiceImpl implements PatientService {
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID, e);
         }
     }
+
+    @Override
+    public long addPatient(Patient patient) throws ServiceException {
+        long inserted;
+        try {
+            inserted =patientDAO.createPatient(patient);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
+        }
+        return inserted;
+    }
 }

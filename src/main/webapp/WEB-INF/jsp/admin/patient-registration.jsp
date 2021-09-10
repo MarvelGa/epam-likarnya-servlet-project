@@ -5,7 +5,8 @@
 <html>
 <head>
     <title>${resources.Registration_form}</title>
-    <link href="/static/style.css" rel="stylesheet"/>
+<%--    <link href="/static/style.css" rel="stylesheet"/>--%>
+    <link rel="stylesheet" href="static/topstyle.css">
 </head>
 <body>
 <center>
