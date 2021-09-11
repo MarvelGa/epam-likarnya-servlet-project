@@ -22,10 +22,44 @@
     <c:choose>
         <c:when test="${requestScope.doctorsList.size()!=0}">
             </br>
+            <table>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <th>
+                                    <label for="category">Choose Category of Doctor</label>
+                                </th>
+
+                                <td>
+                                    <form action="./controller" method="get">
+                                        <select name="category" required onchange="this.form.submit();">
+                                            <option value="">--Please choose an option--</option>
+                                            <c:forEach items="${categories}" var="category">
+                                                <option value="${category.id}" ${catValue!=null?(catValue.equals(category.id)?"selected": ""): ""}> ${category.title}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+<%--                                        <input type="hidden" name="patientId" value=${requestScope.patient.id}>--%>
+                                        <input type="hidden" name="command" value="doctors">
+                                    </form>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </td>
+
+                    <td>
+                    </td>
+
+                    <td>
+                    </td>
+                </tr>
+            </table>
+
             <%
                 int counter = 1;
             %>
-
 
             <table border="1">
                 <tr>
@@ -33,7 +67,7 @@
                     <th>${resources.First_name}</th>
                     <th>${resources.Last_name}</th>
                     <th>${resources.Category}</th>
-<%--                    <th>${resources.Gender}</th>--%>
+                    <th>${resources.Count_of_patients}</th>
                 </tr>
                 <c:forEach var="record" items="${requestScope.doctorsList}">
                     <tr>
@@ -53,9 +87,9 @@
                                 ${record.category}
                         </td>
 
-<%--                        <td>--%>
-<%--                                ${record.gender}--%>
-<%--                        </td>--%>
+                        <td>
+                                ${record.countOfPatient}
+                        </td>
 
                     </tr>
                 </c:forEach>
@@ -68,7 +102,7 @@
     <br>
 
 </center>
-<input type="hidden" name="referer" value="${pageContext.request.requestURI}" />
+<input type="hidden" name="referer" value="${pageContext.request.requestURI}"/>
 </br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>
 <%@include file="/WEB-INF/jsp/footer.jsp" %>
 </body>

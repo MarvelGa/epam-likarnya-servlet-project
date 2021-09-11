@@ -25,6 +25,12 @@ public class UserDAOImpl implements UserDAO {
             "FROM users u INNER JOIN categories cat ON u.category_id=cat.id WHERE u.role='DOCTOR';";
     private static final String GET_ALL_NURSES ="SELECT u.id, u.first_name, u.last_name, u.role \n" +
             "FROM users u WHERE u.role='NURSE';";
+    private static final String GET_DOCTORS_WITH_COUNT_OF_PATIENTS = "select u.id, u.first_name, u.last_name, u.role, c.title, \n" +
+            "(select count(1) from users us inner join medical_cards mcd on mcd.doctor_id=us.id where us.id=u.id group by mcd.doctor_id) as count\n" +
+            "from  users u JOIN categories c ON u.category_id=c.id group by u.id;";
+    private static final String GET_DOCTORS_WITH_COUNT_OF_PATIENTS_BY_CATEGORY="select u.id, u.first_name, u.last_name, u.role, c.title, \n" +
+            "(select count(1) from users us inner join medical_cards mcd on mcd.doctor_id=us.id where us.id=u.id group by mcd.doctor_id) as count\n" +
+            "from  users u JOIN categories c ON u.category_id=c.id where c.id=? group by u.id;";
 
     @Override
     public User getUserByEmail(String email) throws DaoException {
@@ -183,6 +189,62 @@ public class UserDAOImpl implements UserDAO {
         return nurses;
     }
 
+    @Override
+    public List<DoctorDTO> getDoctorsWithCountOfPatients() throws DaoException {
+        final String query = GET_DOCTORS_WITH_COUNT_OF_PATIENTS;
+        List<DoctorDTO> doctors = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                doctors.add(extractDoctorWithPatientCountsFromResultSet(rs));
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_ALL_DOCTORS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_DOCTORS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return doctors;
+    }
+
+    @Override
+    public List<DoctorDTO> getDoctorsWithCountOfPatientsByCategoryId(Long id) throws DaoException {
+        final String query = GET_DOCTORS_WITH_COUNT_OF_PATIENTS_BY_CATEGORY;
+        List<DoctorDTO> doctors = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                doctors.add(extractDoctorWithPatientCountsFromResultSet(rs));
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return doctors;
+    }
+
     private User extractUserFromResultSet(ResultSet rs) throws SQLException {
         User user = new User();
         user.setId(rs.getLong(1));
@@ -212,6 +274,17 @@ public class UserDAOImpl implements UserDAO {
         nurse.setLastName(rs.getString("last_name"));
         nurse.setRole(User.Role.valueOf(rs.getString("role")));
         return nurse;
+    }
+
+    private DoctorDTO extractDoctorWithPatientCountsFromResultSet(ResultSet rs) throws SQLException {
+        DoctorDTO doctor = new DoctorDTO();
+        doctor.setId(rs.getLong("id"));
+        doctor.setFirstName(rs.getString("first_name"));
+        doctor.setLastName(rs.getString("last_name"));
+        doctor.setRole(User.Role.valueOf(rs.getString("role")));
+        doctor.setCategory(rs.getString("title"));
+        doctor.setCountOfPatient(rs.getLong("count"));
+        return doctor;
     }
 
 }

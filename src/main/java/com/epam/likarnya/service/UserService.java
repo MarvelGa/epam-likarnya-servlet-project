@@ -15,4 +15,6 @@ public interface UserService {
     List<DoctorDTO> getDoctorsByCategoryId(Long id) throws ServiceException;
     List<DoctorDTO> getDoctors() throws ServiceException;
     List<NurseDTO> getNurses() throws ServiceException;
+    List<DoctorDTO> getDoctorsWithCountOfPatients() throws ServiceException;
+    List<DoctorDTO> getDoctorsWithCountOfPatientsByCategoryId(Long id) throws ServiceException;;
 }

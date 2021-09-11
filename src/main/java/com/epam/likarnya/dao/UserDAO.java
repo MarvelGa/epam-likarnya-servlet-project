@@ -14,5 +14,6 @@ public interface UserDAO {
     List<DoctorDTO> findDoctorsByCategoryId(Long id) throws DaoException;
     List<DoctorDTO> getDoctors() throws DaoException;
     List<NurseDTO> getNurses() throws DaoException;
-
+    List<DoctorDTO> getDoctorsWithCountOfPatients() throws DaoException;
+    List<DoctorDTO> getDoctorsWithCountOfPatientsByCategoryId(Long id) throws DaoException;
 }

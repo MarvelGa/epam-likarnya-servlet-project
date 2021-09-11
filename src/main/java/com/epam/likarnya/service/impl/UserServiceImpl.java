@@ -76,4 +76,26 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_NURSES, e);
         }
     }
+
+    @Override
+    public List<DoctorDTO> getDoctorsWithCountOfPatients() throws ServiceException {
+        List<DoctorDTO> doctors;
+        try {
+            return doctors = userDAO.getDoctorsWithCountOfPatients();
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+        }
+    }
+
+    @Override
+    public List<DoctorDTO> getDoctorsWithCountOfPatientsByCategoryId(Long id) throws ServiceException {
+        List<DoctorDTO> doctors;
+        try {
+            return doctors = userDAO.getDoctorsWithCountOfPatientsByCategoryId(id);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+        }
+    }
 }

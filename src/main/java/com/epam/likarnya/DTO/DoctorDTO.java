@@ -15,6 +15,8 @@ public class DoctorDTO {
 
     private User.Role role;
 
+    private Long countOfPatient;
+
     public Long getId() {
         return id;
     }
@@ -55,16 +57,24 @@ public class DoctorDTO {
         this.role = role;
     }
 
+    public Long getCountOfPatient() {
+        return countOfPatient;
+    }
+
+    public void setCountOfPatient(Long countOfPatient) {
+        this.countOfPatient = countOfPatient;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         DoctorDTO doctorDTO = (DoctorDTO) o;
-        return Objects.equals(id, doctorDTO.id) && Objects.equals(firstName, doctorDTO.firstName) && Objects.equals(lastName, doctorDTO.lastName) && Objects.equals(category, doctorDTO.category) && role == doctorDTO.role;
+        return Objects.equals(id, doctorDTO.id) && Objects.equals(firstName, doctorDTO.firstName) && Objects.equals(lastName, doctorDTO.lastName) && Objects.equals(category, doctorDTO.category) && role == doctorDTO.role && Objects.equals(countOfPatient, doctorDTO.countOfPatient);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, category, role);
+        return Objects.hash(id, firstName, lastName, category, role, countOfPatient);
     }
 }
