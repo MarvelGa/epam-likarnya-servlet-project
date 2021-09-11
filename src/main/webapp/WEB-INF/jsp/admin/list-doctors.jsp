@@ -19,44 +19,67 @@
         <input type="submit" value="${resources.Add_a_new_doctor}">
     </form>
 
+
+    </br>
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr>
+                        <th>
+                            <label for="category">Choose Category of Doctor</label>
+                        </th>
+
+                        <td>
+                            <form action="./controller" method="get">
+                                <select name="category" id="category" required onchange="this.form.submit();">
+                                    <option value="">--Please choose/default all--</option>
+                                    <c:forEach items="${categories}" var="category">
+                                        <option value="${category.id}" ${catValue!=null?(catValue.equals(category.id)?"selected": ""): ""}> ${category.title}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                                <input type="hidden" name="command" value="doctors">
+                        </td>
+                    </tr>
+                </table>
+
+            </td>
+
+            <td>
+                <table>
+                    <tr>
+                        <th>
+                            <label for="sorting">Sort By</label>
+                        </th>
+
+                        <td>
+                            <select name="sorting" id="sorting" required onchange="this.form.submit();">
+                                <option value="">--Please choose an option--</option>
+                                <option value="ASC"${sort!=null?(sort.equals("ASC")?"selected": ""): ""}>
+                                    LASTNAME-ASC
+                                </option>
+                                <option value="DESC"${sort!=null?(sort.equals("DESC")?"selected":""):""}>
+                                    LASTNAME-DESC
+                                </option>
+                                <option value="INCREASE"${sort!=null?(sort.equals("INCREASE")?"selected": ""): ""}>
+                                    NUMBER OF PATIENT-INCREASE
+                                </option>
+                                <option value="DECREASE"${sort!=null?(sort.equals("DECREASE")?"selected": ""): ""}>
+                                    NUMBER OF PATIENT- DECREASE
+                                </option>
+                            </select>
+                            <input type="hidden" name="command" value="doctors">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    </br>
     <c:choose>
         <c:when test="${requestScope.doctorsList.size()!=0}">
-            </br>
-            <table>
-                <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <th>
-                                    <label for="category">Choose Category of Doctor</label>
-                                </th>
-
-                                <td>
-                                    <form action="./controller" method="get">
-                                        <select name="category" required onchange="this.form.submit();">
-                                            <option value="">--Please choose an option--</option>
-                                            <c:forEach items="${categories}" var="category">
-                                                <option value="${category.id}" ${catValue!=null?(catValue.equals(category.id)?"selected": ""): ""}> ${category.title}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-<%--                                        <input type="hidden" name="patientId" value=${requestScope.patient.id}>--%>
-                                        <input type="hidden" name="command" value="doctors">
-                                    </form>
-                                </td>
-                            </tr>
-                        </table>
-
-                    </td>
-
-                    <td>
-                    </td>
-
-                    <td>
-                    </td>
-                </tr>
-            </table>
-
             <%
                 int counter = 1;
             %>

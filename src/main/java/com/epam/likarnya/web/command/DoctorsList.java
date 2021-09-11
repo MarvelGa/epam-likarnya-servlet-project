@@ -13,7 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DoctorsList implements Command {
     private static final Logger logger = Logger.getLogger(DoctorsList.class);
@@ -22,37 +25,58 @@ public class DoctorsList implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
-        //List<DoctorDTO> doctorsList = userService.getDoctors();
-        String category = request.getParameter("category");
         List<Category> categories = categoryService.getAllCategories();
         request.setAttribute("categories", categories);
+        String category = request.getParameter("category");
+        String sort = request.getParameter("sorting");
+        List<DoctorDTO> doctorsList = new ArrayList<>();
 
-//        if (category != null) {
-//            if (category.isEmpty()) {
-//                return Path.PAGE__DOCTORS;
-//            }
-//            Long categoryId = Long.valueOf(category);
-//            List<DoctorDTO> doctors = userService.getDoctorsWithCountOfPatientsByCategoryId(categoryId);
-//            request.setAttribute("catValue", categoryId);
-//            request.setAttribute("doctorsList", doctors);
-//        }
-        if (category==null){
-            List<DoctorDTO> doctorsList = userService.getDoctorsWithCountOfPatients();
-            request.setAttribute("doctorsList", doctorsList);
+        if (category == null) {
+            doctorsList = userService.getDoctorsWithCountOfPatients();
         } else {
             if (category.isEmpty()) {
-                List<DoctorDTO> doctorsList = userService.getDoctorsWithCountOfPatients();
-                request.setAttribute("doctorsList", doctorsList);
-                return Path.PAGE__DOCTORS;
+                doctorsList = userService.getDoctorsWithCountOfPatients();
+                return getString(request, sort, doctorsList);
             }
             Long categoryId = Long.valueOf(category);
-            List<DoctorDTO> doctors = userService.getDoctorsWithCountOfPatientsByCategoryId(categoryId);
+            doctorsList = userService.getDoctorsWithCountOfPatientsByCategoryId(categoryId);
             request.setAttribute("catValue", categoryId);
-            request.setAttribute("doctorsList", doctors);
+        }
+        return getString(request, sort, doctorsList);
+    }
+
+    private String getString(HttpServletRequest request, String sort, List<DoctorDTO> doctorsList) {
+        if (sort != null && doctorsList.size() != 0) {
+            if (!sort.isEmpty()) {
+                if (sort.equals("DESC")) {
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getLastName))
+                            .collect(Collectors.toList());
+                }
+                if (sort.equals("ASC")) {
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getLastName).reversed())
+                            .collect(Collectors.toList());
+                }
+                if (sort.equals("INCREASE")) {
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getCountOfPatient).reversed())
+                            .collect(Collectors.toList());
+                }
+                if (sort.equals("DECREASE")){
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getCountOfPatient))
+                            .collect(Collectors.toList());
+                }
+            }
         }
 
-
-
+        request.setAttribute("sort", sort);
+        request.setAttribute("doctorsList", doctorsList);
 
         return Path.PAGE__DOCTORS;
     }
