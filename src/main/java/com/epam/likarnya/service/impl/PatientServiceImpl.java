@@ -92,4 +92,15 @@ public class PatientServiceImpl implements PatientService {
         }
         return inserted;
     }
+
+    @Override
+    public List<TreatmentPatientDTO> getPatientsForTreatmentByNurse() throws ServiceException {
+        List<TreatmentPatientDTO> patients;
+        try {
+            return patients = patientDAO.getPatientsForTreatmentByNurse();
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_NURSE, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_NURSE, e);
+        }
+    }
 }

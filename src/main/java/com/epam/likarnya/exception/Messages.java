@@ -40,5 +40,6 @@ public class Messages {
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID = "Cannot obtain patient's history by doctor id at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS = "Cannot find doctors at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_FIND_NURSES = "Cannot find nurses at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_NURSE = "Cannot obtain patients for treatment by nurse at service layer";
 
 }

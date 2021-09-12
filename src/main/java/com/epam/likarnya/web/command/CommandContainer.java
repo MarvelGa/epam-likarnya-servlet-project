@@ -30,7 +30,8 @@ public class CommandContainer {
         commands.put("doctor-treatment-patients", new TreatmentPatient());
         commands.put("execute-treatment", new PostExecuteTreatment());
         commands.put("doctor-cabinet-history", new DoctorHistory());
-
+        commands.put("nurseCabinet", new NurseCabinet());
+        commands.put("execute-treatment-by-nurse", new PostExecuteTreatmentByNurse());
 
         logger.debug("Command container was successfully initialized");
         logger.trace("Number of commands --> " + commands.size());

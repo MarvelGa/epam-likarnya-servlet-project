@@ -71,6 +71,26 @@ public class PatientDAOImpl implements PatientDAO {
             " WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id AND mc.doctor_id=u.id AND tr.appointment_status='EXECUTED' AND st.patient_status='DISCHARGED' AND u.id=?);";
 
 
+    private static final String GET_PATIENTS_FOR_TREATMENT_FOR_NURSE =" SELECT p.id AS id,\n" +
+            " p.first_name AS firstName,\n" +
+            " p.last_name AS lastName,\n" +
+            " p.birth_day as dateOfBirth,\n" +
+            " p.gender AS gender,\n" +
+            " mc.complaints as complaints,\n" +
+            " mc.diagnosis AS diagnosis,\n" +
+            " tr.appointment AS appointment,\n" +
+            " tr.appointment_status AS appointmentStatus,\n" +
+            " u.first_name AS doctorFirstName,\n" +
+            " u.last_name AS doctorLastName,\n" +
+            " c.title AS doctorCategory,\n" +
+            " tr.id AS treatmentId,\n" +
+            " st.id AS statementId\n" +
+            " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c\n" +
+            " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id\n" +
+            " AND mc.statement_id =st.id AND p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='DISCHARGED') \n" +
+            " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id \n" +
+            " AND mc.doctor_id=u.id AND tr.appointment_status='NOT_EXECUTED' AND st.patient_status='DIAGNOSED' AND (tr.appointment='DRUG' OR tr.appointment='PROCEDURE'));";
+
     @Override
     public List<Patient> getPatientWithMedicCard() {
         final String query = GET_NEW_PATIENT_WITHOUT_M_CARD;
@@ -252,6 +272,33 @@ public class PatientDAOImpl implements PatientDAO {
             DBManager.close(con, pstmt, rs);
         }
         return id;
+    }
+
+    @Override
+    public List<TreatmentPatientDTO> getPatientsForTreatmentByNurse() {
+        final String query = GET_PATIENTS_FOR_TREATMENT_FOR_NURSE;
+        List<TreatmentPatientDTO> patients = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                patients.add(extractPatientForTreatmentFromResultSet(rs));
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return patients;
     }
 
     private Patient extractPatientFromResultSet(ResultSet rs) throws SQLException {

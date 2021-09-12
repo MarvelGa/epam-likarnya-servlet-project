@@ -27,13 +27,13 @@
                 <table>
                     <tr>
                         <th>
-                            <label for="category">Choose Category of Doctor</label>
+                            <label for="category">${resources.Choose_category_of_doctor}</label>
                         </th>
 
                         <td>
                             <form action="./controller" method="get">
                                 <select name="category" id="category" required onchange="this.form.submit();">
-                                    <option value="">--Please choose/default all--</option>
+                                    <option value="">--${resources.Default_or_choose}--</option>
                                     <c:forEach items="${categories}" var="category">
                                         <option value="${category.id}" ${catValue!=null?(catValue.equals(category.id)?"selected": ""): ""}> ${category.title}
                                         </option>
@@ -50,23 +50,35 @@
                 <table>
                     <tr>
                         <th>
-                            <label for="sorting">Sort By</label>
+                            <label for="sorting">${resources.Sort_doctors_by}</label>
                         </th>
 
                         <td>
                             <select name="sorting" id="sorting" required onchange="this.form.submit();">
-                                <option value="">--Please choose an option--</option>
+                                <option value="">--${resources.Choose_an_option_or_default}--</option>
+                                <option value="ASC-NAME"${sort!=null?(sort.equals("ASC-NAME")?"selected": ""): ""}>
+                                    ${resources.Firstname_alphabetically}
+                                </option>
+                                <option value="DESC-NAME"${sort!=null?(sort.equals("DESC-NAME")?"selected":""):""}>
+                                    ${resources.Firstname_reverse}
+                                </option>
                                 <option value="ASC"${sort!=null?(sort.equals("ASC")?"selected": ""): ""}>
-                                    LASTNAME-ASC
+                                    ${resources.Lastname_alphabetically}
                                 </option>
                                 <option value="DESC"${sort!=null?(sort.equals("DESC")?"selected":""):""}>
-                                    LASTNAME-DESC
+                                    ${resources.Lastname_reverse}
+                                </option>
+                                <option value="CAT-ASC"${sort!=null?(sort.equals("CAT-ASC")?"selected": ""): ""}>
+                                    ${resources.Category_alphabetically}
+                                </option>
+                                <option value="CAT-DESC"${sort!=null?(sort.equals("CAT-DESC")?"selected":""):""}>
+                                    ${resources.Category_reverse}
                                 </option>
                                 <option value="INCREASE"${sort!=null?(sort.equals("INCREASE")?"selected": ""): ""}>
-                                    NUMBER OF PATIENT-INCREASE
+                                    ${resources.Number_of_patients_increase}
                                 </option>
                                 <option value="DECREASE"${sort!=null?(sort.equals("DECREASE")?"selected": ""): ""}>
-                                    NUMBER OF PATIENT- DECREASE
+                                    ${resources.Number_of_patients_decrease}
                                 </option>
                             </select>
                             <input type="hidden" name="command" value="doctors">
