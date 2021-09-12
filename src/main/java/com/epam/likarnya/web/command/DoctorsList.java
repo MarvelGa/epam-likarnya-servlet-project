@@ -48,28 +48,52 @@ public class DoctorsList implements Command {
     private String getString(HttpServletRequest request, String sort, List<DoctorDTO> doctorsList) {
         if (sort != null && doctorsList.size() != 0) {
             if (!sort.isEmpty()) {
-                if (sort.equals("DESC")) {
+                if (sort.equals("ASC-NAME")) {
                     doctorsList = doctorsList.stream()
                             .filter(c -> c != null)
-                            .sorted(Comparator.comparing(DoctorDTO::getLastName))
+                            .sorted(Comparator.comparing(DoctorDTO::getFirstName))
+                            .collect(Collectors.toList());
+                }
+                if (sort.equals("DESC-NAME")) {
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getFirstName).reversed())
                             .collect(Collectors.toList());
                 }
                 if (sort.equals("ASC")) {
                     doctorsList = doctorsList.stream()
                             .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getLastName))
+                            .collect(Collectors.toList());
+                }
+                if (sort.equals("DESC")) {
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
                             .sorted(Comparator.comparing(DoctorDTO::getLastName).reversed())
                             .collect(Collectors.toList());
                 }
-                if (sort.equals("INCREASE")) {
+                if (sort.equals("DECREASE")) {
                     doctorsList = doctorsList.stream()
                             .filter(c -> c != null)
                             .sorted(Comparator.comparing(DoctorDTO::getCountOfPatient).reversed())
                             .collect(Collectors.toList());
                 }
-                if (sort.equals("DECREASE")){
+                if (sort.equals("INCREASE")) {
                     doctorsList = doctorsList.stream()
                             .filter(c -> c != null)
                             .sorted(Comparator.comparing(DoctorDTO::getCountOfPatient))
+                            .collect(Collectors.toList());
+                }
+                if (sort.equals("CAT-ASC")) {
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getCategory))
+                            .collect(Collectors.toList());
+                }
+                if (sort.equals("CAT-DESC")) {
+                    doctorsList = doctorsList.stream()
+                            .filter(c -> c != null)
+                            .sorted(Comparator.comparing(DoctorDTO::getCategory).reversed())
                             .collect(Collectors.toList());
                 }
             }

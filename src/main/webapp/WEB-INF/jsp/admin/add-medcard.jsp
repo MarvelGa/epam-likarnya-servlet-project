@@ -46,13 +46,13 @@
     <table>
         <tr>
             <th>
-                <label for="category">Choose Category of Doctor</label>
+                <label for="category">${resources.Choose_category_of_doctor}</label>
             </th>
 
             <td>
                 <form action="./controller" method="get">
-                    <select name="category" required onchange="this.form.submit();">
-                        <option value="">--Please choose an option--</option>
+                    <select name="category"  id="category" required onchange="this.form.submit();">
+                        <option value="">--${resources.Choose_an_option}--</option>
                         <c:forEach items="${categories}" var="category">
                             <option value="${category.id}" ${catValue!=null?(catValue.equals(category.id)?"selected": ""): ""}> ${category.title}
                             </option>
@@ -73,11 +73,11 @@
                     <table>
                         <tr>
                             <th>
-                                <label for="doctor">Choose Doctor</label>
+                                <label for="doctor">${resourses.Choose_a_doctor}</label>
                             </th>
                             <td>
-                                <select name="doctor" required>
-                                    <option value="">--Please choose an option--</option>
+                                <select name="doctor" id =doctor required>
+                                    <option value="">--${resources.Choose_an_option}--</option>
                                     <c:forEach items="${requestScope.doctors}" var="doctor" varStatus="doctorId">
                                         <option value=${doctor.id}>${doctor.firstName} ${doctor.lastName}
                                         </option>
@@ -88,7 +88,7 @@
 
                         <tr>
                             <th>
-                                <label>Enter the Complaints of Patient</label>
+                                <label>${resources.Enter_the_complaints}</label>
                             </th>
                             <td>
                                 <input type="text" name="complaints" id="complaints" required/>
