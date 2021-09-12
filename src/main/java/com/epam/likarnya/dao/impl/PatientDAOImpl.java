@@ -67,7 +67,9 @@ public class PatientDAOImpl implements PatientDAO {
             " c.title AS doctorCategory,\n" +
             " (SELECT u.first_name FROM users u WHERE u.id=tr.executor_id) as nameOfExecutor,\n" +
             " (SELECT u.last_name FROM users u WHERE u.id=tr.executor_id) as lastNameOfExecutor,\n" +
-            " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor\n" +
+            " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor,\n" +
+            " st.created_at AS dateOfAdmission,\n"+
+            " st.changed AS dateOfDischarge\n"+
             " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c \n" +
             " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id AND mc.statement_id =st.id\n" +
             " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr \n" +
@@ -108,7 +110,9 @@ public class PatientDAOImpl implements PatientDAO {
             " c.title AS doctorCategory,\n" +
             " (SELECT u.first_name FROM users u WHERE u.id=tr.executor_id) as nameOfExecutor,\n" +
             " (SELECT u.last_name FROM users u WHERE u.id=tr.executor_id) as lastNameOfExecutor,\n" +
-            " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor\n" +
+            " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor,\n" +
+            " st.created_at AS dateOfAdmission,\n"+
+            " st.changed AS dateOfDischarge\n"+
             " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c \n" +
             " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id AND mc.statement_id =st.id\n" +
             " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr \n" +
@@ -400,6 +404,8 @@ public class PatientDAOImpl implements PatientDAO {
         patientForTreatment.setNameOfExecutor(rs.getString("nameOfExecutor"));
         patientForTreatment.setLastNameOfExecutor(rs.getString("lastNameOfExecutor"));
         patientForTreatment.setRoleOfExecutor(rs.getString("roleOfExecutor"));
+        patientForTreatment.setDateOfAdmission(rs.getTimestamp("dateOfAdmission").toLocalDateTime());
+        patientForTreatment.setDateOfDischarge(rs.getTimestamp("dateOfDischarge").toLocalDateTime());
         return patientForTreatment;
     }
 }

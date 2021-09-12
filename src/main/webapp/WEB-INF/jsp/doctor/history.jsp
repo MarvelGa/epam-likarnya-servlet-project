@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/jspf/page.jspf" %>
 <%@ include file="/WEB-INF/jspf/taglib.jspf" %>
+<%@ taglib uri="/WEB-INF/tld/custom.tld" prefix="custom" %>
 <%@ page isELIgnored="false" %>
 
 <!DOCTYPE html>
@@ -32,6 +33,8 @@
                     <th>${resources.Treatment_status}</th>
                     <th>${resources.Patients_doctor}</th>
                     <th>${resources.Treatment_executor}</th>
+                    <th>${resources.Day_of_admission}</th>
+                    <th>${resources.Day_of_discharge}</th>
                 </tr>
                 <c:forEach var="record" items="${patientsHistory}">
                     <tr>
@@ -73,6 +76,12 @@
 
                         <td>
                                 ${record.roleOfExecutor} - ${record.nameOfExecutor } ${record.lastNameOfExecutor}
+                        </td>
+                        <td>
+                            <custom:formatDate value="${record.dateOfAdmission}" pattern="dd.MM.yyyy HH:mm"/>
+                        </td>
+                        <td>
+                            <custom:formatDate value="${record.dateOfDischarge}" pattern="dd.MM.yyyy HH:mm"/>
                         </td>
 
                     </tr>

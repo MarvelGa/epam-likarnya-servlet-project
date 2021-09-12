@@ -14,7 +14,7 @@
             FormatDate with java8 type
         </description>
         <name>formatDate</name>
-        <tag-class>com.epam.tct.web.customtags.FormatDateTag</tag-class>
+        <tag-class>com.epam.likarnya.web.customtags.FormatDateTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <description>

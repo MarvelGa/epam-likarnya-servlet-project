@@ -1,5 +1,6 @@
 package com.epam.likarnya.DTO;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class TreatmentPatientDTO {
@@ -30,10 +31,16 @@ public class TreatmentPatientDTO {
     private String treatmentId;
 
     private String statementId;
+
     private String nameOfExecutor;
+
     private String lastNameOfExecutor;
+
     private String roleOfExecutor;
 
+    private LocalDateTime dateOfAdmission;
+
+    private LocalDateTime dateOfDischarge;
 
     public Long getId() {
         return id;
@@ -171,16 +178,32 @@ public class TreatmentPatientDTO {
         this.roleOfExecutor = roleOfExecutor;
     }
 
+    public LocalDateTime getDateOfAdmission() {
+        return dateOfAdmission;
+    }
+
+    public void setDateOfAdmission(LocalDateTime dateOfAdmission) {
+        this.dateOfAdmission = dateOfAdmission;
+    }
+
+    public LocalDateTime getDateOfDischarge() {
+        return dateOfDischarge;
+    }
+
+    public void setDateOfDischarge(LocalDateTime dateOfDischarge) {
+        this.dateOfDischarge = dateOfDischarge;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TreatmentPatientDTO that = (TreatmentPatientDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(gender, that.gender) && Objects.equals(complaints, that.complaints) && Objects.equals(diagnosis, that.diagnosis) && Objects.equals(appointment, that.appointment) && Objects.equals(appointmentStatus, that.appointmentStatus) && Objects.equals(doctorFirstName, that.doctorFirstName) && Objects.equals(doctorLastName, that.doctorLastName) && Objects.equals(doctorCategory, that.doctorCategory) && Objects.equals(treatmentId, that.treatmentId) && Objects.equals(statementId, that.statementId) && Objects.equals(nameOfExecutor, that.nameOfExecutor) && Objects.equals(lastNameOfExecutor, that.lastNameOfExecutor) && Objects.equals(roleOfExecutor, that.roleOfExecutor);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(gender, that.gender) && Objects.equals(complaints, that.complaints) && Objects.equals(diagnosis, that.diagnosis) && Objects.equals(appointment, that.appointment) && Objects.equals(appointmentStatus, that.appointmentStatus) && Objects.equals(doctorFirstName, that.doctorFirstName) && Objects.equals(doctorLastName, that.doctorLastName) && Objects.equals(doctorCategory, that.doctorCategory) && Objects.equals(treatmentId, that.treatmentId) && Objects.equals(statementId, that.statementId) && Objects.equals(nameOfExecutor, that.nameOfExecutor) && Objects.equals(lastNameOfExecutor, that.lastNameOfExecutor) && Objects.equals(roleOfExecutor, that.roleOfExecutor) && Objects.equals(dateOfAdmission, that.dateOfAdmission) && Objects.equals(dateOfDischarge, that.dateOfDischarge);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, complaints, diagnosis, appointment, appointmentStatus, doctorFirstName, doctorLastName, doctorCategory, treatmentId, statementId, nameOfExecutor, lastNameOfExecutor, roleOfExecutor);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, complaints, diagnosis, appointment, appointmentStatus, doctorFirstName, doctorLastName, doctorCategory, treatmentId, statementId, nameOfExecutor, lastNameOfExecutor, roleOfExecutor, dateOfAdmission, dateOfDischarge);
     }
 }

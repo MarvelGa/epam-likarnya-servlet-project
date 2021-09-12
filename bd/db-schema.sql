@@ -27,10 +27,10 @@ create table statements
 (
     id             bigint auto_increment
         primary key,
-    created_at     date       not null,
+    created_at     datetime(6)  not null,
     patient_status varchar(255) not null,
     patient_id     bigint      not null,
-    changed        date        null,
+    changed        datetime(6)       null,
     constraint FK_patient_id
         foreign key (patient_id) references patients (id)
 );
