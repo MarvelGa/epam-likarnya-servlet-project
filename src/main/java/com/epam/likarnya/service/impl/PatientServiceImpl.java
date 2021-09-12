@@ -103,4 +103,15 @@ public class PatientServiceImpl implements PatientService {
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_NURSE, e);
         }
     }
+
+    @Override
+    public List<TreatmentPatientDTO> getNurseTreatmentHistoryById(Long id) throws ServiceException {
+        List<TreatmentPatientDTO> patients;
+        try {
+            return patients = patientDAO.getNurseTreatmentHistoryById(id);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_NURSE_TREATMENT_HISTORY_OF_PATIENTS, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_NURSE_TREATMENT_HISTORY_OF_PATIENTS, e);
+        }
+    }
 }

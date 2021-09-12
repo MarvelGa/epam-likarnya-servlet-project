@@ -64,14 +64,16 @@ public class PatientDAOImpl implements PatientDAO {
             " tr.appointment_status AS appointmentStatus,\n" +
             " u.first_name AS doctorFirstName,\n" +
             " u.last_name AS doctorLastName,\n" +
-            " c.title AS doctorCategory\n" +
+            " c.title AS doctorCategory,\n" +
+            " (SELECT u.first_name FROM users u WHERE u.id=tr.executor_id) as nameOfExecutor,\n" +
+            " (SELECT u.last_name FROM users u WHERE u.id=tr.executor_id) as lastNameOfExecutor,\n" +
+            " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor\n" +
             " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c \n" +
             " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id AND mc.statement_id =st.id\n" +
             " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr \n" +
             " WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id AND mc.doctor_id=u.id AND tr.appointment_status='EXECUTED' AND st.patient_status='DISCHARGED' AND u.id=?);";
 
-
-    private static final String GET_PATIENTS_FOR_TREATMENT_FOR_NURSE =" SELECT p.id AS id,\n" +
+    private static final String GET_PATIENTS_FOR_TREATMENT_FOR_NURSE = " SELECT p.id AS id,\n" +
             " p.first_name AS firstName,\n" +
             " p.last_name AS lastName,\n" +
             " p.birth_day as dateOfBirth,\n" +
@@ -90,6 +92,27 @@ public class PatientDAOImpl implements PatientDAO {
             " AND mc.statement_id =st.id AND p.id NOT IN (SELECT st.patient_id FROM statements st WHERE st.patient_status='DISCHARGED') \n" +
             " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id \n" +
             " AND mc.doctor_id=u.id AND tr.appointment_status='NOT_EXECUTED' AND st.patient_status='DIAGNOSED' AND (tr.appointment='DRUG' OR tr.appointment='PROCEDURE'));";
+
+
+    private static final String GET_NURSE_TREATMENT_HISTORY = " SELECT p.id AS id,\n" +
+            " p.first_name AS firstName,\n" +
+            " p.last_name AS lastName,\n" +
+            " p.birth_day as dateOfBirth,\n" +
+            " p.gender AS gender,\n" +
+            " mc.complaints as complaints,\n" +
+            " mc.diagnosis AS diagnosis,\n" +
+            " tr.appointment AS appointment,\n" +
+            " tr.appointment_status AS appointmentStatus,\n" +
+            " u.first_name AS doctorFirstName,\n" +
+            " u.last_name AS doctorLastName,\n" +
+            " c.title AS doctorCategory,\n" +
+            " (SELECT u.first_name FROM users u WHERE u.id=tr.executor_id) as nameOfExecutor,\n" +
+            " (SELECT u.last_name FROM users u WHERE u.id=tr.executor_id) as lastNameOfExecutor,\n" +
+            " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor\n" +
+            " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c \n" +
+            " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id AND mc.statement_id =st.id\n" +
+            " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr \n" +
+            " WHERE mc.id=tr.m_card_id AND st.id=mc.statement_id AND mc.doctor_id=u.id AND tr.appointment_status='EXECUTED' AND st.patient_status='DISCHARGED' AND tr.executor_id=?);";
 
     @Override
     public List<Patient> getPatientWithMedicCard() {
@@ -301,6 +324,36 @@ public class PatientDAOImpl implements PatientDAO {
         return patients;
     }
 
+    @Override
+    public List<TreatmentPatientDTO> getNurseTreatmentHistoryById(Long id) {
+        final String query = GET_NURSE_TREATMENT_HISTORY;
+        List<TreatmentPatientDTO> patients = new ArrayList<>();
+        DBManager dbm;
+        Statement stmt = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        Connection con = null;
+        try {
+            dbm = DBManager.getInstance();
+            con = dbm.getConnection();
+            pstmt = con.prepareStatement(query);
+            pstmt.setLong(1, id);
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                patients.add(extractPatientHistoryFromResultSet(rs));
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            DBManager.rollback(con);
+            logger.error(Messages.ERR_CANNOT_READ_NURSE_TREATMENT_HISTORY_OF_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_READ_NURSE_TREATMENT_HISTORY_OF_PATIENTS, ex);
+        } finally {
+            DBManager.close(con, stmt, rs);
+        }
+        return patients;
+    }
+
     private Patient extractPatientFromResultSet(ResultSet rs) throws SQLException {
         Patient patient = new Patient();
         patient.setId(rs.getLong("id"));
@@ -344,6 +397,9 @@ public class PatientDAOImpl implements PatientDAO {
         patientForTreatment.setDoctorFirstName(rs.getString("doctorFirstName"));
         patientForTreatment.setDoctorLastName(rs.getString("doctorLastName"));
         patientForTreatment.setDoctorCategory(rs.getString("doctorCategory"));
+        patientForTreatment.setNameOfExecutor(rs.getString("nameOfExecutor"));
+        patientForTreatment.setLastNameOfExecutor(rs.getString("lastNameOfExecutor"));
+        patientForTreatment.setRoleOfExecutor(rs.getString("roleOfExecutor"));
         return patientForTreatment;
     }
 }

@@ -27,6 +27,7 @@ public final class Path {
 
    //nurse
    public static final String PAGE__NURSE_CABINET= "/WEB-INF/jsp/nurse/nurseCabinet.jsp";
+   public static final String PAGE__NURSE_TREATMENT_HISTORY_OF_PATIENTS= "/WEB-INF/jsp/nurse/history.jsp";
 
 
     public static final String COMMAND__NURSES_LIST = "controller?command=nurses";

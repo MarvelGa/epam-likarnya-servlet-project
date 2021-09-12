@@ -11,10 +11,10 @@
 </head>
 <body>
 <center>
-    <%@include file="/WEB-INF/jsp/doctor/top-doctor.jsp" %>
+    <%@include file="/WEB-INF/jsp/nurse/top-nurse.jsp" %>
 
     <c:choose>
-        <c:when test="${patientsHistory.size()!=0}">
+        <c:when test="${nurseTreatmentHistory.size()!=0}">
             <h2 style="color: cadetblue">${resources.History}</h2>
             </br>
             <%
@@ -33,7 +33,7 @@
                     <th>${resources.Patients_doctor}</th>
                     <th>${resources.Treatment_executor}</th>
                 </tr>
-                <c:forEach var="record" items="${patientsHistory}">
+                <c:forEach var="record" items="${nurseTreatmentHistory}">
                     <tr>
                         <td>
                             <%=counter++%>

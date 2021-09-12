@@ -1,6 +1,7 @@
 <div class="topnav">
     <a class="active" href="controller?command=nurseCabinet">Main</a>
-    <a class="active" href="controller?command=nurse-treatment-patients">Patients for Treatment</a>
+    <a class="active" href="controller?command=nurseCabinet">Patients for Treatment</a>
+    <a class="active" href="controller?command=nurseHistory">History</a>
 
     <a class="active" href='changeLocale' class='langstyle'>${resources.EN}</a>
     <strong style='width:2px'>|</strong>
@@ -15,5 +16,5 @@
 </div>
 
 <h2><span
-        style="color:#5cac8c">NURSE ${sessionScope.nurse.firstName} ${sessionScope.nurse.lastName} </span>
+        style="color:#5cac8c">${resources.Nurse} ${sessionScope.nurse.firstName} ${sessionScope.nurse.lastName} </span>
 </h2>

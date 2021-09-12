@@ -30,6 +30,10 @@ public class TreatmentPatientDTO {
     private String treatmentId;
 
     private String statementId;
+    private String nameOfExecutor;
+    private String lastNameOfExecutor;
+    private String roleOfExecutor;
+
 
     public Long getId() {
         return id;
@@ -143,16 +147,40 @@ public class TreatmentPatientDTO {
         this.statementId = statementId;
     }
 
+    public String getNameOfExecutor() {
+        return nameOfExecutor;
+    }
+
+    public void setNameOfExecutor(String nameOfExecutor) {
+        this.nameOfExecutor = nameOfExecutor;
+    }
+
+    public String getLastNameOfExecutor() {
+        return lastNameOfExecutor;
+    }
+
+    public void setLastNameOfExecutor(String lastNameOfExecutor) {
+        this.lastNameOfExecutor = lastNameOfExecutor;
+    }
+
+    public String getRoleOfExecutor() {
+        return roleOfExecutor;
+    }
+
+    public void setRoleOfExecutor(String roleOfExecutor) {
+        this.roleOfExecutor = roleOfExecutor;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TreatmentPatientDTO that = (TreatmentPatientDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(gender, that.gender) && Objects.equals(complaints, that.complaints) && Objects.equals(diagnosis, that.diagnosis) && Objects.equals(appointment, that.appointment) && Objects.equals(appointmentStatus, that.appointmentStatus) && Objects.equals(doctorFirstName, that.doctorFirstName) && Objects.equals(doctorLastName, that.doctorLastName) && Objects.equals(doctorCategory, that.doctorCategory) && Objects.equals(treatmentId, that.treatmentId) && Objects.equals(statementId, that.statementId);
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(dateOfBirth, that.dateOfBirth) && Objects.equals(gender, that.gender) && Objects.equals(complaints, that.complaints) && Objects.equals(diagnosis, that.diagnosis) && Objects.equals(appointment, that.appointment) && Objects.equals(appointmentStatus, that.appointmentStatus) && Objects.equals(doctorFirstName, that.doctorFirstName) && Objects.equals(doctorLastName, that.doctorLastName) && Objects.equals(doctorCategory, that.doctorCategory) && Objects.equals(treatmentId, that.treatmentId) && Objects.equals(statementId, that.statementId) && Objects.equals(nameOfExecutor, that.nameOfExecutor) && Objects.equals(lastNameOfExecutor, that.lastNameOfExecutor) && Objects.equals(roleOfExecutor, that.roleOfExecutor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, complaints, diagnosis, appointment, appointmentStatus, doctorFirstName, doctorLastName, doctorCategory, treatmentId, statementId);
+        return Objects.hash(id, firstName, lastName, dateOfBirth, gender, complaints, diagnosis, appointment, appointmentStatus, doctorFirstName, doctorLastName, doctorCategory, treatmentId, statementId, nameOfExecutor, lastNameOfExecutor, roleOfExecutor);
     }
 }

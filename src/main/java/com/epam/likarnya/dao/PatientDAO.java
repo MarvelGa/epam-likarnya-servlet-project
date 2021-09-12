@@ -15,4 +15,5 @@ public interface PatientDAO {
    List<TreatmentPatientDTO> getPatientsHistoryByDoctorId(Long id);
    long createPatient(Patient patient) throws DaoException;
    List<TreatmentPatientDTO> getPatientsForTreatmentByNurse();
+   List<TreatmentPatientDTO> getNurseTreatmentHistoryById(Long id);
 }
