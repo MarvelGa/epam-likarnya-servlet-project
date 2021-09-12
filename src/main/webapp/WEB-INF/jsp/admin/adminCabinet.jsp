@@ -25,6 +25,46 @@
             <%
                 int counter = 1;
             %>
+            <td>
+                <table>
+                    <tr>
+                        <th>
+                            <label for="sorting">${resources.Sort_patients_by}</label>
+                        </th>
+
+                        <td>
+                            <form action="./controller" method="get">
+                            <select name="sorting" id="sorting" required onchange="this.form.submit();">
+                                <option value="">--${resources.Choose_an_option_or_default}--</option>
+                                <option value="ASC-NAME"${sort!=null?(sort.equals("ASC-NAME")?"selected": ""): ""}>
+                                        ${resources.Firstname_alphabetically}
+                                </option>
+                                <option value="DESC-NAME"${sort!=null?(sort.equals("DESC-NAME")?"selected":""):""}>
+                                        ${resources.Firstname_reverse}
+                                </option>
+                                <option value="ASC"${sort!=null?(sort.equals("ASC")?"selected": ""): ""}>
+                                        ${resources.Lastname_alphabetically}
+                                </option>
+                                <option value="DESC"${sort!=null?(sort.equals("DESC")?"selected":""):""}>
+                                        ${resources.Lastname_reverse}
+                                </option>
+                                <option value="INCREASE"${sort!=null?(sort.equals("INCREASE")?"selected": ""): ""}>
+                                        ${resources.Date_of_birth_increase}
+                                </option>
+                                <option value="DECREASE"${sort!=null?(sort.equals("DECREASE")?"selected": ""): ""}>
+                                        ${resources.Date_of_birth_decrease}
+                                </option>
+                            </select>
+                            <input type="hidden" name="command" value="adminCabinet">
+                            </form>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            </tr>
+            </table>
+            </br>
+
             <table border="1">
                 <tr>
                     <th>No.</th>
