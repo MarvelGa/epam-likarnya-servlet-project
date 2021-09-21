@@ -33,7 +33,7 @@ public class CommandContainer {
         commands.put("nurseCabinet", new NurseCabinet());
         commands.put("execute-treatment-by-nurse", new PostExecuteTreatmentByNurse());
         commands.put("nurseHistory", new NurseHistory());
-
+        commands.put("commandNotFound", new CommandNotFound());
         logger.debug("Command container was successfully initialized");
         logger.trace("Number of commands --> " + commands.size());
     }

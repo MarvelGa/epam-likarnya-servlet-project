@@ -11,7 +11,7 @@ INSERT INTO categories  (title)  VALUES ( 'THERAPIST'),
 
 INSERT INTO users  (email, first_name, last_name, `password`, `role`)
 VALUES
-( 'adminTest@gmail.com', 'Admin', 'Admin', '8938a619894013bd7717ebd3d21cc0b8', 'ADMIN');
+( 'adminTest@gmail.com', 'Sergey', 'Fedorchuk', '8938a619894013bd7717ebd3d21cc0b8', 'ADMIN');
 
 INSERT INTO users  (email, first_name, last_name, `password`, `role`, category_id)
 VALUES

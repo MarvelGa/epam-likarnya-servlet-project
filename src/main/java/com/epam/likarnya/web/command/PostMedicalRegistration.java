@@ -48,7 +48,6 @@ public class PostMedicalRegistration implements Command {
             return Path.PAGE__MEDIC_REGISTRATION;
         }
 
-
         if (userService.getUserByEmail(email) != null) {
             logger.trace("User with this email already exist");
             String errorMessage = "User with this email already exist";
@@ -75,6 +74,18 @@ public class PostMedicalRegistration implements Command {
         if (!DataValidator.isPasswordValid(password)) {
             logger.trace("Invalid password");
             String errorMessage = "You entered invalid password";
+            errorList.add(errorMessage);
+        }
+
+        if (Long.valueOf(category) != 0 && role.equals("NURSE")) {
+            logger.trace("NURSE has the category");
+            String errorMessage = "NURSE should not have the category!";
+            errorList.add(errorMessage);
+        }
+
+        if (Long.valueOf(category) == 0 && role.equals("DOCTOR")) {
+            logger.trace("Doctor without a category");
+            String errorMessage = "Doctor should have the category!";
             errorList.add(errorMessage);
         }
 
