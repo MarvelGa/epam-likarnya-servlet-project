@@ -18,6 +18,13 @@ public class NursesList implements Command {
     private static final Logger logger = Logger.getLogger(NursesList.class);
     private UserService userService = ServiceFactory.getInstance().getUserService();
 
+    public NursesList() {
+    }
+
+    public NursesList(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         List<NurseDTO> nursesList = userService.getNurses();

@@ -22,6 +22,6 @@ public class LogoutCommand implements Command {
         }
         logger.debug(String.format("redirect --> %s", Path.PAGE__LOGIN));
         logger.debug("Command finished");
-        return Path.PAGE__LOGIN;
+        return Path.COMMAND__LOGIN_PAGE;
     }
 }

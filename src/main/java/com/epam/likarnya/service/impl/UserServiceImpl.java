@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
         User user;
         try {
             user = userDAO.getUserByEmail(email);
-            return user;
         } catch (DaoException ex) {
             logger.error(ex);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_USER_BY_EMAIL, ex);
         }
+        return user;
     }
 
     @Override
@@ -44,58 +44,69 @@ public class UserServiceImpl implements UserService {
         try {
             inserted = userDAO.createMedicalWorker(user);
         } catch (DaoException e) {
-            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
-            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_MEDICAL_WORKER, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_MEDICAL_WORKER, e);
         }
         return inserted;
     }
 
     @Override
     public List<DoctorDTO> getDoctorsByCategoryId(Long id) throws ServiceException {
-        return userDAO.findDoctorsByCategoryId(id);
+        List<DoctorDTO> doctors;
+        try {
+            doctors = userDAO.findDoctorsByCategoryId(id);
+        } catch (DaoException e) {
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_BY_CATEGORY_ID, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_BY_CATEGORY_ID, e);
+        }
+        return doctors;
     }
 
     @Override
     public List<DoctorDTO> getDoctors() throws ServiceException {
         List<DoctorDTO> doctors;
         try {
-            return doctors = userDAO.getDoctors();
+            doctors = userDAO.getDoctors();
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
         }
+        return doctors;
     }
 
     @Override
     public List<NurseDTO> getNurses() throws ServiceException {
         List<NurseDTO> nurses;
         try {
-            return nurses = userDAO.getNurses();
+            nurses = userDAO.getNurses();
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_NURSES, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_NURSES, e);
         }
+        return nurses;
     }
 
     @Override
     public List<DoctorDTO> getDoctorsWithCountOfPatients() throws ServiceException {
         List<DoctorDTO> doctors;
         try {
-            return doctors = userDAO.getDoctorsWithCountOfPatients();
+            doctors = userDAO.getDoctorsWithCountOfPatients();
         } catch (DaoException e) {
-            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
-            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_WITH_PATIENT_COUNT, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_WITH_PATIENT_COUNT, e);
         }
+        return doctors;
     }
 
     @Override
     public List<DoctorDTO> getDoctorsWithCountOfPatientsByCategoryId(Long id) throws ServiceException {
         List<DoctorDTO> doctors;
         try {
-            return doctors = userDAO.getDoctorsWithCountOfPatientsByCategoryId(id);
+            doctors = userDAO.getDoctorsWithCountOfPatientsByCategoryId(id);
         } catch (DaoException e) {
-            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
-            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_DOCTORS, e);
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_WITH_PATIENT_COUNT_BY_CATEGORY_ID, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_WITH_PATIENT_COUNT_BY_CATEGORY_ID, e);
         }
+        return doctors;
     }
 }

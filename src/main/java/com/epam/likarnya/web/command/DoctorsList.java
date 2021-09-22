@@ -23,6 +23,14 @@ public class DoctorsList implements Command {
     private UserService userService = ServiceFactory.getInstance().getUserService();
     private CategoryService categoryService = ServiceFactory.getInstance().getCategoryService();
 
+    public DoctorsList() {
+    }
+
+    public DoctorsList(UserService userService, CategoryService categoryService) {
+        this.userService = userService;
+        this.categoryService = categoryService;
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         List<Category> categories = categoryService.getAllCategories();

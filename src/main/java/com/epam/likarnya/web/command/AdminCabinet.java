@@ -18,9 +18,14 @@ import java.util.stream.Collectors;
 
 public class AdminCabinet implements Command {
     private static final Logger logger = Logger.getLogger(AdminCabinet.class);
-    private UserService userService = ServiceFactory.getInstance().getUserService();
     private PatientService patientService = ServiceFactory.getInstance().getPatientService();
 
+    public AdminCabinet() {
+    }
+
+    public AdminCabinet(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {

@@ -16,7 +16,13 @@ import java.io.IOException;
 public class TreatmentAssigning implements Command {
     private static final Logger logger = Logger.getLogger(TreatmentAssigning.class);
     private PatientService patientService = ServiceFactory.getInstance().getPatientService();
-    private MedicalCardService medicalCardService = ServiceFactory.getInstance().getMedicalCardService();
+
+    public TreatmentAssigning() {
+    }
+
+    public TreatmentAssigning(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {

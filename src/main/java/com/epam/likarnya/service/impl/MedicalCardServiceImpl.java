@@ -2,7 +2,6 @@ package com.epam.likarnya.service.impl;
 
 import com.epam.likarnya.DTO.MedicalCardDTO;
 import com.epam.likarnya.dao.MedicalCardDAO;
-import com.epam.likarnya.dao.UserDAO;
 import com.epam.likarnya.dao.impl.DaoFactory;
 import com.epam.likarnya.exception.DaoException;
 import com.epam.likarnya.exception.Messages;

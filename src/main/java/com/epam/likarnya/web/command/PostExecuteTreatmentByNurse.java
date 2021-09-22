@@ -17,9 +17,14 @@ import java.io.IOException;
 
 public class PostExecuteTreatmentByNurse implements Command {
     private static final Logger logger = Logger.getLogger(PostExecuteTreatmentByNurse.class);
-    private PatientService patientService = ServiceFactory.getInstance().getPatientService();
-    private MedicalCardService medicalCardService = ServiceFactory.getInstance().getMedicalCardService();
     private TreatmentService treatmentService = ServiceFactory.getInstance().getTreatmentService();
+
+    public PostExecuteTreatmentByNurse() {
+    }
+
+    public PostExecuteTreatmentByNurse(TreatmentService treatmentService) {
+        this.treatmentService = treatmentService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {

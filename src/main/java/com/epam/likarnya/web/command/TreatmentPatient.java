@@ -20,8 +20,13 @@ import java.util.List;
 public class TreatmentPatient implements Command {
     private static final Logger logger = Logger.getLogger(TreatmentPatient.class);
     private PatientService patientService = ServiceFactory.getInstance().getPatientService();
-    private MedicalCardService medicalCardService = ServiceFactory.getInstance().getMedicalCardService();
-    private TreatmentService treatmentService = ServiceFactory.getInstance().getTreatmentService();
+
+    public TreatmentPatient() {
+    }
+
+    public TreatmentPatient(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {

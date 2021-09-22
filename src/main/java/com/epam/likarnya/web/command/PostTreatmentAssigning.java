@@ -18,9 +18,16 @@ import java.time.LocalDateTime;
 
 public class PostTreatmentAssigning implements Command {
     private static final Logger logger = Logger.getLogger(PostTreatmentAssigning.class);
-    private PatientService patientService = ServiceFactory.getInstance().getPatientService();
     private MedicalCardService medicalCardService = ServiceFactory.getInstance().getMedicalCardService();
     private TreatmentService treatmentService = ServiceFactory.getInstance().getTreatmentService();
+
+    public PostTreatmentAssigning() {
+    }
+
+    public PostTreatmentAssigning(MedicalCardService medicalCardService, TreatmentService treatmentService) {
+        this.medicalCardService = medicalCardService;
+        this.treatmentService = treatmentService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {

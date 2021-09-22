@@ -5,7 +5,6 @@ import com.epam.likarnya.Path;
 import com.epam.likarnya.exception.AppException;
 import com.epam.likarnya.model.User;
 import com.epam.likarnya.service.PatientService;
-import com.epam.likarnya.service.UserService;
 import com.epam.likarnya.service.impl.ServiceFactory;
 import org.apache.log4j.Logger;
 
@@ -18,8 +17,14 @@ import java.util.List;
 
 public class NurseCabinet implements Command {
     private static final Logger logger = Logger.getLogger(NurseCabinet.class);
-    private UserService userService = ServiceFactory.getInstance().getUserService();
     private PatientService patientService = ServiceFactory.getInstance().getPatientService();
+
+    public NurseCabinet() {
+    }
+
+    public NurseCabinet(PatientService patientService) {
+        this.patientService = patientService;
+    }
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {

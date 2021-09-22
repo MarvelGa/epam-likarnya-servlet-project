@@ -29,66 +29,70 @@ public class PatientServiceImpl implements PatientService {
     public List<Patient> getPatientWithOutMedicalCard() throws ServiceException {
         List<Patient> patients;
         try {
-            return patients = patientDAO.getPatientWithMedicCard();
+            patients = patientDAO.getPatientWithMedicCard();
         } catch (DaoException e) {
-            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENT, e);
-            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_READ_ALL_PATIENT, e);
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_WITHOUT_MEDICAL_CARD, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_WITHOUT_MEDICAL_CARD, e);
         }
+        return patients;
     }
 
     @Override
     public Patient getPatientById(Long id) throws ServiceException {
         Patient patient;
         try {
-            return patient = patientDAO.findById(id);
-        }catch (DaoException e){
+            patient = patientDAO.findById(id);
+        } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_READ_PATIENT_BY_ID, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_READ_PATIENT_BY_ID, e);
         }
-
+        return patient;
     }
 
     @Override
     public List<PatientDTO> getPatientsByDoctorId(Long id) throws ServiceException {
         List<PatientDTO> patients;
         try {
-            return patients = patientDAO.getPatientsByDoctorId(id);
+            patients = patientDAO.getPatientsByDoctorId(id);
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
         }
+        return patients;
     }
 
     @Override
     public List<TreatmentPatientDTO> getPatientsForTreatmentByDoctorId(Long id) throws ServiceException {
         List<TreatmentPatientDTO> patients;
         try {
-            return patients = patientDAO.getPatientsForTreatmentByDoctorId(id);
+            patients = patientDAO.getPatientsForTreatmentByDoctorId(id);
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_FIND_PATIENTS_BY_DOCTOR_ID, e);
         }
+        return patients;
     }
 
     @Override
     public List<TreatmentPatientDTO> getPatientsHistoryByDoctorId(Long id) throws ServiceException {
         List<TreatmentPatientDTO> patients;
         try {
-            return patients = patientDAO.getPatientsHistoryByDoctorId(id);
+            patients = patientDAO.getPatientsHistoryByDoctorId(id);
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_HISTORY_BY_DOCTOR_ID, e);
         }
+        return patients;
     }
 
     @Override
     public long addPatient(Patient patient) throws ServiceException {
         long inserted;
         try {
-            inserted =patientDAO.createPatient(patient);
+            inserted = patientDAO.createPatient(patient);
         } catch (DaoException e) {
-            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
-            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_USER, e);
+            logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_PATIENT, e);
+            throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_INSERT_PATIENT, e);
         }
         return inserted;
     }
@@ -97,21 +101,23 @@ public class PatientServiceImpl implements PatientService {
     public List<TreatmentPatientDTO> getPatientsForTreatmentByNurse() throws ServiceException {
         List<TreatmentPatientDTO> patients;
         try {
-            return patients = patientDAO.getPatientsForTreatmentByNurse();
+            patients = patientDAO.getPatientsForTreatmentByNurse();
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_NURSE, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_NURSE, e);
         }
+        return patients;
     }
 
     @Override
     public List<TreatmentPatientDTO> getNurseTreatmentHistoryById(Long id) throws ServiceException {
         List<TreatmentPatientDTO> patients;
         try {
-            return patients = patientDAO.getNurseTreatmentHistoryById(id);
+            patients = patientDAO.getNurseTreatmentHistoryById(id);
         } catch (DaoException e) {
             logger.error(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_NURSE_TREATMENT_HISTORY_OF_PATIENTS, e);
             throw new ServiceException(Messages.ERR_SERVICE_LAYER_CANNOT_OBTAIN_NURSE_TREATMENT_HISTORY_OF_PATIENTS, e);
         }
+        return patients;
     }
 }

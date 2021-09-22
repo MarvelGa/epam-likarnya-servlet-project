@@ -20,6 +20,14 @@ public class PostCreateMedicalCard implements Command {
     private PatientService patientService = ServiceFactory.getInstance().getPatientService();
     private MedicalCardService medicalCardService = ServiceFactory.getInstance().getMedicalCardService();
 
+    public PostCreateMedicalCard() {
+    }
+
+    public PostCreateMedicalCard(PatientService patientService, MedicalCardService medicalCardService) {
+        this.patientService = patientService;
+        this.medicalCardService = medicalCardService;
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         String doctorId = request.getParameter("doctor");

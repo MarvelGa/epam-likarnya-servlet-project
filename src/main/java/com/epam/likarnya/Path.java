@@ -33,6 +33,7 @@ public final class Path {
     public static final String COMMAND__NURSES_LIST = "controller?command=nurses";
     public static final String COMMAND__DOCTORS_LIST = "controller?command=doctors";
     public static final String COMMAND__DOCTORS_PATIENTS_FOR_TREATMENT = "controller?command=doctor-treatment-patients";
+    public static final String COMMAND__LOGIN_PAGE = "controller?command=login";
 
 
     public static final String COMMAND__ADMIN_CABINET = "controller?command=adminCabinet";

@@ -19,6 +19,13 @@ public class NurseHistory implements Command {
     private static final Logger logger = Logger.getLogger(DoctorHistory.class);
     private PatientService patientService = ServiceFactory.getInstance().getPatientService();
 
+    public NurseHistory() {
+    }
+
+    public NurseHistory(PatientService patientService) {
+        this.patientService = patientService;
+    }
+
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         HttpSession session =request.getSession();

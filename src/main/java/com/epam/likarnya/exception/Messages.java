@@ -43,5 +43,11 @@ public class Messages {
     public static final String ERR_SERVICE_LAYER_CANNOT_FIND_NURSES = "Cannot find nurses at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_NURSE = "Cannot obtain patients for treatment by nurse at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_NURSE_TREATMENT_HISTORY_OF_PATIENTS = "Cannot obtain nurse treatment history of patients at service layer";
-
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_CATEGORIES = "Cannot obtain categories at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_PATIENTS_WITHOUT_MEDICAL_CARD = "Cannot obtain patients without medical card at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_INSERT_PATIENT = "Cannot insert patient at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_INSERT_MEDICAL_WORKER = "Cannot insert medical worker at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_BY_CATEGORY_ID = "Cannot obtain doctors by Id of category at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_WITH_PATIENT_COUNT = "Cannot obtain doctors with patient count at service layer";
+    public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_DOCTORS_WITH_PATIENT_COUNT_BY_CATEGORY_ID = "Cannot obtain doctors with patient count by Id of category at service layer";
 }
