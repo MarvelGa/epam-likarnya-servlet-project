@@ -36,37 +36,31 @@ public class AdminCabinet implements Command {
             if (!sort.isEmpty()) {
                 if (sort.equals("ASC-NAME")) {
                     patients = patients.stream()
-                            .filter(c -> c != null)
                             .sorted(Comparator.comparing(Patient::getFirstName))
                             .collect(Collectors.toList());
                 }
                 if (sort.equals("DESC-NAME")) {
                     patients = patients.stream()
-                            .filter(c -> c != null)
                             .sorted(Comparator.comparing(Patient::getFirstName).reversed())
                             .collect(Collectors.toList());
                 }
                 if (sort.equals("ASC")) {
                     patients = patients.stream()
-                            .filter(c -> c != null)
                             .sorted(Comparator.comparing(Patient::getLastName))
                             .collect(Collectors.toList());
                 }
                 if (sort.equals("DESC")) {
                     patients = patients.stream()
-                            .filter(c -> c != null)
                             .sorted(Comparator.comparing(Patient::getLastName).reversed())
                             .collect(Collectors.toList());
                 }
                 if (sort.equals("DECREASE")) {
                     patients = patients.stream()
-                            .filter(c -> c != null)
                             .sorted(Comparator.comparing(Patient::getDateOfBirth).reversed())
                             .collect(Collectors.toList());
                 }
                 if (sort.equals("INCREASE")) {
                     patients = patients.stream()
-                            .filter(c -> c != null)
                             .sorted(Comparator.comparing(Patient::getDateOfBirth))
                             .collect(Collectors.toList());
                 }

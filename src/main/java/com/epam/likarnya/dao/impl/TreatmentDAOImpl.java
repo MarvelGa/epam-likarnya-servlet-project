@@ -97,8 +97,8 @@ public class TreatmentDAOImpl implements TreatmentDAO {
             executed=true;
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_CREATE_TREATMENT_AND_SET_DIAGNOSIS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_CREATE_TREATMENT_AND_SET_DIAGNOSIS, ex);
+            logger.error(Messages.ERR_CANNOT_EXECUTE_TREATMENT, ex);
+            throw new DaoException(Messages.ERR_CANNOT_EXECUTE_TREATMENT, ex);
         } finally {
             DBManager.close(con, pstmt, rs);
         }

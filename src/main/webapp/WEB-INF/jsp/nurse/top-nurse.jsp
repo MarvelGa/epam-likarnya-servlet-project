@@ -1,7 +1,7 @@
 <div class="topnav">
-    <a class="active" href="controller?command=nurseCabinet">Main</a>
-    <a class="active" href="controller?command=nurseCabinet">Patients for Treatment</a>
-    <a class="active" href="controller?command=nurseHistory">History</a>
+    <a class="active" href="controller?command=nurseCabinet">${resources.Main}</a>
+    <a class="active" href="controller?command=nurseCabinet">${resources.Patients_for_treatment}</a>
+    <a class="active" href="controller?command=nurseHistory">${resources.History}</a>
 
     <a class="active" href='changeLocale' class='langstyle'>${resources.EN}</a>
     <strong style='width:2px'>|</strong>

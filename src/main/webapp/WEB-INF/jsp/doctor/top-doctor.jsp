@@ -1,8 +1,8 @@
 <div class="topnav">
-    <a class="active" href="controller?command=doctorCabinet">Main</a>
-    <a class="active" href="controller?command=doctorCabinet">Patients for Diagnosis</a>
-    <a class="active" href="controller?command=doctor-treatment-patients">Patients for Treatment</a>
-    <a class="active" href="controller?command=doctor-cabinet-history">Treated Patients/History</a>
+    <a class="active" href="controller?command=doctorCabinet">${resources.Main}</a>
+    <a class="active" href="controller?command=doctorCabinet">${resources.Patients_for_diagnosis}</a>
+    <a class="active" href="controller?command=doctor-treatment-patients">${resources.Patients_for_treatment}</a>
+    <a class="active" href="controller?command=doctor-cabinet-history">${resources.Treated_patients_or_history}</a>
 
     <a class="active" href='changeLocale' class='langstyle'>${resources.EN}</a>
     <strong style='width:2px'>|</strong>

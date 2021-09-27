@@ -41,7 +41,7 @@ public class PostMedicalRegistration implements Command {
 
         List<String> errorList = new ArrayList<>();
 
-        if (firstName == null || lastName == null || email == null || password==null || role==null || category==null) {
+        if (firstName == null || lastName == null || email == null || password == null || role == null || category == null) {
             String errorMessage = "Each field must be filled";
             request.setAttribute("errorMessage", errorMessage);
             logger.error("errorMessage --> " + errorMessage);
@@ -96,16 +96,16 @@ public class PostMedicalRegistration implements Command {
         } else {
             User newUser;
             Long categoryId = Long.valueOf(category);
-            if (categoryId!=0){
-                newUser =new User();
+            if (categoryId != 0) {
+                newUser = new User();
                 newUser.setFirstName(firstName);
                 newUser.setLastName(lastName);
                 newUser.setEmail(email);
                 newUser.setPassword(encryptPassword(password));
                 newUser.setRole(User.Role.valueOf(role));
                 newUser.setCategoryId(categoryId);
-            }else{
-                newUser =new User();
+            } else {
+                newUser = new User();
                 newUser.setFirstName(firstName);
                 newUser.setLastName(lastName);
                 newUser.setEmail(email);
@@ -115,7 +115,7 @@ public class PostMedicalRegistration implements Command {
 
             logger.trace("Saving new user: " + newUser);
             userService.addMedicalWorker(newUser);
-            if (newUser.getRole()== User.Role.NURSE){
+            if (newUser.getRole() == User.Role.NURSE) {
                 logger.debug(String.format("redirect --> %s", Path.COMMAND__NURSES_LIST));
                 return Path.COMMAND__NURSES_LIST;
             }

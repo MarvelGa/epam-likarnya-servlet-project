@@ -92,8 +92,8 @@ public class UserDAOImpl implements UserDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_INSERT_USER, ex);
-            throw new DaoException(Messages.ERR_CANNOT_INSERT_USER, ex);
+            logger.error(Messages.ERR_CANNOT_INSERT_MEDICAL_WORKER, ex);
+            throw new DaoException(Messages.ERR_CANNOT_INSERT_MEDICAL_WORKER, ex);
         } finally {
             DBManager.close(con, pstmt, rs);
         }
@@ -127,8 +127,8 @@ public class UserDAOImpl implements UserDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_DOCTORS_BY_CATEGORY_ID, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_DOCTORS_BY_CATEGORY_ID, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
@@ -208,8 +208,8 @@ public class UserDAOImpl implements UserDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_DOCTORS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_DOCTORS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_DOCTORS_WITH_COUNT_OF_PATIENTS, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_DOCTORS_WITH_COUNT_OF_PATIENTS, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
@@ -237,8 +237,8 @@ public class UserDAOImpl implements UserDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_DOCTORS_WITH_COUNT_OF_PATIENTS_BY_CATEGORY_ID, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_DOCTORS_WITH_COUNT_OF_PATIENTS_BY_CATEGORY_ID, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }

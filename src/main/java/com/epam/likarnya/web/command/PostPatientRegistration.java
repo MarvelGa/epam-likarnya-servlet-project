@@ -44,7 +44,7 @@ public class PostPatientRegistration implements Command {
 
         List<String> errorList = new ArrayList<>();
 
-        if (name == null || lastName == null || bDay == null || gender==null || name.isEmpty() || lastName.isEmpty()) {
+        if (name == null || lastName == null || bDay == null || gender == null || name.isEmpty() || lastName.isEmpty()) {
             String errorMessage = "Each field must be filled";
             request.setAttribute("errorMessage", errorMessage);
             logger.error("errorMessage --> " + errorMessage);

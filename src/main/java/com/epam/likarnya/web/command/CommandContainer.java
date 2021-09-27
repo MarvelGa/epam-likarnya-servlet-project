@@ -12,7 +12,6 @@ public class CommandContainer {
     static {
         commands = new HashMap<>();
         commands.put("login", new GetLoginCommand());
-//        commands.put("home", new CommandHome());
         commands.put("authorization", new PostLoginCommand());
         commands.put("adminCabinet", new AdminCabinet());
         commands.put("patient-form", new PatientFormRegistration());

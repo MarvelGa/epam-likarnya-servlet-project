@@ -27,7 +27,7 @@ public class TreatmentAssigning implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
         String patientId = request.getParameter("patientId");
-        if (patientId!=null){
+        if (patientId != null) {
             Patient patient = patientService.getPatientById(Long.valueOf(patientId));
             request.setAttribute("onePatient", patient);
         }

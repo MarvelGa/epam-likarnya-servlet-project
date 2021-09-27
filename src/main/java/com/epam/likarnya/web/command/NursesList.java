@@ -1,6 +1,5 @@
 package com.epam.likarnya.web.command;
 
-import com.epam.likarnya.DTO.DoctorDTO;
 import com.epam.likarnya.DTO.NurseDTO;
 import com.epam.likarnya.Path;
 import com.epam.likarnya.exception.AppException;

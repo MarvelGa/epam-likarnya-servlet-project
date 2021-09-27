@@ -27,6 +27,19 @@ public class Messages {
     public static final String ERR_CANNOT_READ_ALL_DOCTORS = "Cannot read all doctors";
     public static final String ERR_CANNOT_READ_ALL_NURSES = "Cannot read nurses doctors";
     public static final String ERR_CANNOT_READ_NURSE_TREATMENT_HISTORY_OF_PATIENTS = "Cannot read nurse treatment history of patients";
+    public static final String ERR_CANNOT_GET_PATIENTS_WITH_MEDICAL_CARD = "Cannot get patients with medical card patients";
+    public static final String ERR_CANNOT_OBTAIN_PATIENT_BY_ID = "Cannot obtain patient by id";
+    public static final String ERR_CANNOT_OBTAIN_PATIENTS_BY_DOCTOR_ID = "Cannot obtain patients by doctorId";
+    public static final String ERR_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_DOCTOR_ID = "Cannot obtain patients for treatment by doctorId";
+    public static final String ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_BY_DOCTOR_ID = "Cannot obtain history of treatment of patients by doctorId";
+    public static final String ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_BY_NURSE_ID = "Cannot obtain history of treatment of patients by nurseId";
+    public static final String ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_FOR_NURSE = "Cannot obtain history of treatment of patients for nurse";
+    public static final String ERR_CANNOT_INSERT_PATIENT = "Cannot insert patient";
+    public static final String ERR_CANNOT_EXECUTE_TREATMENT = "Cannot execute_treatment";
+    public static final String ERR_CANNOT_INSERT_MEDICAL_WORKER = "Cannot insert medical worker";
+    public static final String ERR_CANNOT_OBTAIN_DOCTORS_BY_CATEGORY_ID = "Cannot obtain doctors by category id";
+    public static final String ERR_CANNOT_OBTAIN_DOCTORS_WITH_COUNT_OF_PATIENTS = "Cannot obtain doctors with count of patients";
+    public static final String ERR_CANNOT_OBTAIN_DOCTORS_WITH_COUNT_OF_PATIENTS_BY_CATEGORY_ID= "Cannot obtain doctors with count of patients by categoryId";
 
     public static final String ERR_SERVICE_LAYER_CANNOT_OBTAIN_USER_BY_EMAIL = "Cannot obtain a user by its email at service layer";
     public static final String ERR_SERVICE_LAYER_CANNOT_INSERT_USER = "Cannot insert new user at service layer";

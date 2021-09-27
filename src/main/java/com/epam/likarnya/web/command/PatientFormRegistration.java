@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class PatientFormRegistration implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, AppException {
-       request.setAttribute("dateOfToday", LocalDate.now());
+        request.setAttribute("dateOfToday", LocalDate.now());
 
         return Path.PAGE__PATIENT_REGISTRATION;
     }

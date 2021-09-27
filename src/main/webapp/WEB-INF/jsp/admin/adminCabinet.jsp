@@ -90,7 +90,6 @@
 
                         <td>
                                 ${record.dateOfBirth}
-<%--                                        <custom:formatDate value="${record.dateOfBirth}" pattern="dd.MM.yyyy"/>--%>
                         </td>
 
                         <td>

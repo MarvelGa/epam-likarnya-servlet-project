@@ -68,8 +68,8 @@ public class PatientDAOImpl implements PatientDAO {
             " (SELECT u.first_name FROM users u WHERE u.id=tr.executor_id) as nameOfExecutor,\n" +
             " (SELECT u.last_name FROM users u WHERE u.id=tr.executor_id) as lastNameOfExecutor,\n" +
             " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor,\n" +
-            " st.created_at AS dateOfAdmission,\n"+
-            " st.changed AS dateOfDischarge\n"+
+            " st.created_at AS dateOfAdmission,\n" +
+            " st.changed AS dateOfDischarge\n" +
             " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c \n" +
             " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id AND mc.statement_id =st.id\n" +
             " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr \n" +
@@ -111,8 +111,8 @@ public class PatientDAOImpl implements PatientDAO {
             " (SELECT u.first_name FROM users u WHERE u.id=tr.executor_id) as nameOfExecutor,\n" +
             " (SELECT u.last_name FROM users u WHERE u.id=tr.executor_id) as lastNameOfExecutor,\n" +
             " (SELECT u.role FROM users u WHERE u.id=tr.executor_id) as roleOfExecutor,\n" +
-            " st.created_at AS dateOfAdmission,\n"+
-            " st.changed AS dateOfDischarge\n"+
+            " st.created_at AS dateOfAdmission,\n" +
+            " st.changed AS dateOfDischarge\n" +
             " FROM patients p, statements st, medical_cards mc, treatments tr, users u, categories c \n" +
             " WHERE c.id=u.category_id AND u.id=mc.doctor_id AND p.id=st.patient_id AND mc.id=tr.m_card_id AND mc.statement_id =st.id\n" +
             " AND p.id IN (SELECT st.patient_id FROM statements st, medical_cards mc, users u, treatments tr \n" +
@@ -137,8 +137,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_GET_PATIENTS_WITH_MEDICAL_CARD, ex);
+            throw new DaoException(Messages.ERR_CANNOT_GET_PATIENTS_WITH_MEDICAL_CARD, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
@@ -164,8 +164,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_OBTAIN_USER_BY_ID, ex);
-            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_USER_BY_EMAIL, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_PATIENT_BY_ID, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_PATIENT_BY_ID, ex);
         } finally {
             DBManager.close(con, pstmt, rs);
         }
@@ -200,8 +200,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_PATIENTS_BY_DOCTOR_ID, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_PATIENTS_BY_DOCTOR_ID, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
@@ -230,8 +230,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_DOCTOR_ID, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_PATIENTS_FOR_TREATMENT_BY_DOCTOR_ID, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
@@ -260,8 +260,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_BY_DOCTOR_ID, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_BY_DOCTOR_ID, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
@@ -293,8 +293,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_INSERT_USER, ex);
-            throw new DaoException(Messages.ERR_CANNOT_INSERT_USER, ex);
+            logger.error(Messages.ERR_CANNOT_INSERT_PATIENT, ex);
+            throw new DaoException(Messages.ERR_CANNOT_INSERT_PATIENT, ex);
         } finally {
             DBManager.close(con, pstmt, rs);
         }
@@ -320,8 +320,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_ALL_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_FOR_NURSE, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_FOR_NURSE, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
@@ -350,8 +350,8 @@ public class PatientDAOImpl implements PatientDAO {
             con.commit();
         } catch (SQLException ex) {
             DBManager.rollback(con);
-            logger.error(Messages.ERR_CANNOT_READ_NURSE_TREATMENT_HISTORY_OF_PATIENTS, ex);
-            throw new DaoException(Messages.ERR_CANNOT_READ_NURSE_TREATMENT_HISTORY_OF_PATIENTS, ex);
+            logger.error(Messages.ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_BY_NURSE_ID, ex);
+            throw new DaoException(Messages.ERR_CANNOT_OBTAIN_HISTORY_OF_TREATMENT_OF_PATIENTS_BY_NURSE_ID, ex);
         } finally {
             DBManager.close(con, stmt, rs);
         }
